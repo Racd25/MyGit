@@ -1,0 +1,74 @@
+#:import hex kivy.utils.get_color_from_hex
+
+<BotonOscuro@Button>:
+    background_normal: ''
+    background_color: hex('#393939')
+
+<LabelOscuro@Label>:
+    canvas.before:   
+        Color: 
+            rgba: hex ('#393939') 
+        Rectangle:
+            size: self.size
+            pos: self.pos
+
+
+<AdminRV2>:
+    viewclass: 'SelectableInventarioLabel'
+    size_hint: 1, 1
+    SelectableRecycleBoxLayout:
+        default_size: None, dp(40)
+        default_size_hint: 1, None
+        size_hint_y: None
+        height: self.minimum_height
+        orientation: 'vertical'
+        multiselect: False
+        touch_multiselect: False
+
+
+<AdminF>:
+    orientation: 'vertical'
+    canvas.before:
+        Color:
+            rgba: hex('#159F9A')
+        Rectangle:
+            size: self.size
+            pos: self.pos
+
+    BoxLayout:
+        orientation: 'horizontal'
+        size_hint_y: .1
+        padding: .1
+        spacing: .2
+        BotonOscuro:
+            id: cambiar_vista
+            size_hint_x: .2
+            text: 'Cambiar Vista'
+            on_release: root.cambiar_vista()
+        Label:
+            id: notification
+            size_hint_x: .6
+        BotonOscuro:
+            id: boton_signout
+            size_hint_x: .2
+            text: 'Salir de Cuenta'
+            on_release: root.salir()
+
+    ScreenManager:
+        id: vista_manager1
+        canvas.before:
+            Color:
+                rgba: hex('#FFFFFF')
+            Rectangle:
+                size: self.size
+                pos: self.pos
+        
+        VistaMenuI:
+        VistaInventario:
+        VistaConsultas:
+        VistaUsuarios:
+        VistaOperador:
+
+    BoxLayout:
+        size_hint_y:.05
+

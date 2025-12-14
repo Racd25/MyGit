@@ -1,0 +1,583 @@
+#:import hex kivy.utils.get_color_from_hex
+
+<BotonOscuro@Button>:
+    background_normal: ''
+    background_color: hex('#393939')
+
+<LabelOscuro@Label>:
+    canvas.before:   
+        Color: 
+            rgba: hex ('#393939') 
+        Rectangle:
+            size: self.size
+            pos: self.pos
+
+<SelectableBoxLayout>:
+    # Draw a background to indicate selection
+    canvas.before:
+        Color:
+            rgba: hex('#C9F3EF') if self.selected else hex('#F0F0F0')
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    Label:
+        id: _hashtag
+        size_hint_x: .1
+        color: (0,0,0,1)
+    Label:
+        id: _articulo
+        size_hint_x: .4
+        color: (0,0,0,1)
+    Label:
+        id: _cantidad
+        size_hint_x: .15
+        color: (0,0,0,1)
+    Label:
+        id: _precio_por_articulo
+        size_hint_x: .15
+        color: (0,0,0,1)
+    Label:
+        id: _precio
+        size_hint_x: .2
+        color: (0,0,0,1)
+
+<SelectableBoxLayoutPopup>:
+    canvas.before:
+        Color:
+            rgba: hex('#7A9B87') if self.selected else (hex('#FF6B6B') if self.stock_level == 'critical' else (hex('#FFD93D') if self.stock_level == 'warning' else hex('#393939')))
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    Label:
+        id: _codigo    	
+        size_hint_x: .25
+    Label:
+        id: _articulo
+        size_hint_x: .5
+    Label:
+        id: _cantidad
+        size_hint_x: .1
+        bold: True if root.stock_level != 'normal' else False
+    Label:
+        id: _precio
+        size_hint_x: .15
+
+<ProductoPorNombrePopup>:
+    size_hint: .5, .55
+    title: 'Productos y Servicios'
+    BoxLayout:
+        orientation: 'vertical'
+        BoxLayout:
+            size_hint_y: .1
+            Label:
+                text: 'Código'
+                size_hint_x: .25
+            Label:
+                text: 'Nombre'
+                size_hint_x: .5
+            Label:
+                text: 'Stock/Desc.'
+                size_hint_x: .1
+            Label:
+                text: 'Precio'
+                size_hint_x: .15
+        RV:
+            viewclass: 'SelectableBoxLayoutPopup'
+            id: rvs
+        BoxLayout:
+            size_hint_y: .2
+            Button: 
+                text: 'Seleccionar'
+                on_release: root.seleccionar_articulo()
+            Button:
+                text: 'Salir'
+                on_release: root.dismiss()
+
+<RV>:
+    viewclass: 'SelectableBoxLayout'
+    SelectableRecycleBoxLayout:
+        default_size: None, dp(36)
+        default_size_hint: 1, None
+        size_hint_y: None
+        height: self.minimum_height
+        orientation: 'vertical'
+        multiselect: False
+        touch_multiselect: False
+
+
+
+<VentasWindow>:
+    canvas.before:   
+        Color: 
+            rgba: hex ('#00A99D') 
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    orientation: 'vertical'
+    BoxLayout:
+        size_hint_y: .1
+        spacing: .5
+        Label: 
+            id: bienvenido_label
+            text: "Bienvenido"
+            size_hint_x: .25
+            color: hex('#000000')
+
+        GridLayout:
+            size_hint_x: .25
+            rows: 2
+            cols: 2
+            Label:
+                text: "Fecha: "
+                color: hex('#000000')
+            Label:
+                id: fecha
+                color: hex('#000000')
+            Label:
+                text: "Hora: "
+                color: hex('#000000')
+            Label:
+                id: hora
+                color: hex('#000000')
+
+        Label:
+            size_hint_x: .2
+        BotonOscuro:
+            id: admin_boton
+            text: "Mary's Pet"
+            size_hint_x: .15
+            on_release: root.admin()
+        BotonOscuro:
+            id: salir_boton
+            text: 'Salir'
+            size_hint_x: .15
+            on_release: root.salir()
+     
+    BoxLayout:
+        canvas.before:   
+            Color:
+                rgba: hex ('#FFFFFF') 
+            Rectangle:
+                size: self.size
+                pos: self.pos
+
+        size_hint_y: .87
+        BoxLayout:
+            size_hint_x: .7
+            orientation: "vertical"
+            spacing: .5
+            GridLayout:
+                spacing: .5
+                size_hint_y: .1
+                rows: 2
+                cols: 2
+                LabelOscuro:
+                    text: 'buscar por codigo'
+                LabelOscuro:
+                    text: 'Buscar Por Nombre'
+                TextInput:
+                    id: buscar_codigo
+                    multiline: False
+                    on_text_validate: root.agregar_producto_codigo(self.text)
+                TextInput:
+                    id: buscar_nombre
+                    on_text_validate: root.agregar_producto_nombre(self.text)
+                    multiline: False
+            BoxLayout:
+                size_hint_y: .8
+                orientation: 'vertical'
+                BoxLayout:
+                    size_hint_y: .05
+                    spacing: .5
+                    LabelOscuro:
+                        text: '#'
+                        size_hint_x: .1
+                    LabelOscuro:
+                        text: 'Articulo'
+                        size_hint_x: .4
+                    LabelOscuro:
+                        text: 'Cantidad'
+                        size_hint_x: .15
+                    LabelOscuro:
+                        text: 'Precio'
+                        size_hint_x: .15
+                    LabelOscuro:
+                        text: 'Total'
+                        size_hint_x: .2
+                RV:
+                    viewclass: 'SelectableBoxLayout'
+                    id: rvs
+
+            BoxLayout:
+                size_hint_y: .1
+                spacing: .5
+                BotonOscuro:
+                    text: 'Borrar Articulo'
+                    on_release: root.eliminar_producto()
+                BotonOscuro:
+                    text: 'Cambiar Cantidad'
+                    on_release: root.modificar_producto()
+                    
+
+        BoxLayout:
+            size_hint_x: .3
+            orientation: 'vertical'
+            canvas.before:   
+                Color:
+                    rgba: hex ('#BCD3D2') 
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+            GridLayout:
+                canvas.before:   
+                    Color:
+                        rgba: hex ('#000000') 
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+                size_hint_y: .4
+                rows: 2
+                cols: 2
+                Label: 
+                    text: 'Sub-Total'
+                Label:
+                    id: sub_total
+                    text: '0.00'
+                Label:
+                    text: 'Total'
+                Label:
+                    id: total
+                    text: '0.00'
+            BoxLayout:
+                size_hint_y: .6
+                orientation: 'vertical'
+                spacing: .5
+                Label:
+                    id: notificacion_falla
+                    size_hint_y: .25
+                    color: hex('#9B0303')
+                Label:
+                    id: notificacion_exito
+                    size_hint_y: .25
+                    color: hex('#039B1E')
+
+                BotonOscuro:
+                    size_hint_y: .25
+                    id: pagar
+                    text: 'Pagar'
+                    on_release: root.pagar()
+                BotonOscuro:
+                    size_hint_y: .25
+                    id: nueva_compra
+                    text: 'Nueva Compra'
+                    on_release: root.nueva_compra()
+    
+    BoxLayout:  
+        size_hint_y: .03
+
+
+
+<SelectableInventarioLabel>:
+    # Draw a background to indicate selection
+    canvas.before:
+        Color:
+            rgba: hex('#C9F3EF') if self.selected else hex('#F0F0F0')
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    Label:
+    	id: _idrepuesto
+    	size_hint_x: .05
+    	color: (0,0,0,1)
+    Label:
+    	id: _repuesto
+    	size_hint_x: .25
+    	color: (0,0,0,1)
+    Label:
+    	id: _grupo
+    	size_hint_x: .2
+    	color: (0,0,0,1)
+    Label:
+    	id: _unidad
+    	size_hint_x: .2
+    	color: (0,0,0,1)
+    Label:
+    	id: _existencia
+    	size_hint_x: .1
+    	color: (0,0,0,1)
+    Label:
+    	id: _costo
+    	size_hint_x: .1
+    	color: (0,0,0,1)
+    Label:
+    	id: _precio
+    	size_hint_x: .1
+    	color: (0,0,0,1)
+
+<InventarioPopup>:
+    size_hint: .7, .6  # Ajustado para mayor altura
+    auto_dismiss: False
+    title: 'Entrada Inventario'
+
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 15
+        spacing: 8
+
+
+
+        # Título - Altura fija
+        Label:
+            id: producto_info_1
+            text: 'Agregar producto nuevo'
+            bold: True
+            color: (1, 1, 1, 1)
+            halign: 'center'
+            text_size: self.size
+            size_hint_y: None  # ← Clave: desactivar size_hint_y
+            height: 30        # ← Altura fija
+
+        # Mensaje de error - Altura fija
+        Label:
+            id: no_valid_notif
+            text: ''
+            color: (1, 0, 0, 1)
+            halign: 'center'
+            text_size: self.size
+            size_hint_y: None  # ← Clave
+            height: 30        # ← Altura fija
+
+
+        BoxLayout:
+            size_hint_y: None
+            height: 40
+            spacing: 10
+            Label:
+                text: 'Código:'
+                size_hint_x: 0.3
+                color: (1, 1, 1, 1)
+            TextInput:
+                id: repuesto_codigo
+                multiline: False
+                write_tab: False
+
+            Label:
+                text: 'Nombre:'
+                size_hint_x: 0.3
+                color: (1, 1, 1, 1)
+            TextInput:
+                id: repuesto_nombre
+                multiline: False
+                write_tab: False
+
+            Label:
+                text: 'Grupo:'
+                size_hint_x: 0.3
+                color: (1, 1, 1, 1)
+            TextInput:
+                id: repuesto_grupo
+                multiline: False
+                write_tab: False
+
+
+        BoxLayout:
+            size_hint_y: None
+            height: 40
+            spacing: 10
+            Label:
+                text: 'Unidad:'
+                color: (1, 1, 1, 1)
+            TextInput:
+                id: repuesto_unidad
+                multiline: False
+                write_tab: False
+
+            Label:
+                text: 'Existencia:'
+                color: (1, 1, 1, 1)
+            TextInput:
+                id: repuesto_existencia
+                multiline: False
+                input_filter: 'int'
+                write_tab: False
+            Label:
+                text: 'Cantidad Mínima:'
+                color: (1, 1, 1, 1)
+            TextInput:
+                id: repuesto_minimo
+                multiline: False
+                write_tab: False
+            Label:
+                text: 'Cantidad Máxima:'
+                color: (1, 1, 1, 1)
+            TextInput:
+                id: repuesto_máximo
+                multiline: False
+                write_tab: False
+
+
+        BoxLayout:
+            size_hint_y: None
+            height: 40
+            spacing: 10
+            Label:
+                text: 'Costo:'
+                size_hint_x: 0.3
+                color: (1, 1, 1, 1)
+            TextInput:
+                id: repuesto_costo
+                size_hint_x: 0.7
+                multiline: False
+                input_filter: 'float'
+                write_tab: False
+
+            Label:
+                text: 'Precio:'
+                size_hint_x: 0.3
+                color: (1, 1, 1, 1)
+            TextInput:
+                id: repuesto_precio
+                size_hint_x: 0.7
+                multiline: False
+                input_filter: 'float'
+                write_tab: False
+
+        # Botones
+        BoxLayout:
+            size_hint_y: None
+            height: 50
+            spacing: 15
+
+            Button:
+                text: 'Aceptar'
+                on_release: 
+                    root.verificar(
+                    repuesto_codigo.text, 
+                    repuesto_nombre.text, 
+                    repuesto_existencia.text, 
+                    repuesto_precio.text
+                    )
+
+            Button:
+                text: 'Cancelar'
+                on_release: root.dismiss()
+
+
+
+<InventarioWindow>:
+	id: main_win
+	orientation: 'vertical'
+	canvas.before:
+		Color:
+			rgba: hex('#159F9A')
+		Rectangle:
+			size: self.size
+			pos: self.pos
+
+	BoxLayout:
+		orientation: 'vertical'
+		size_hint_y: .1
+		BoxLayout:
+			padding: .1
+			spacing: .2
+			BotonOscuro:
+				id: cambiar_vista
+				size_hint_x: .2
+				text: 'Cambiar Vista'
+				on_release: root.cambiar_vista()
+			Label:
+				id: mostrat_usuario
+				size_hint_x: .2
+				color: hex('#000000')
+			Label:
+				size_hint_x: .2
+			Label:
+				id: notification
+				size_hint_x: .2
+			BotonOscuro:
+				id: boton_signout
+				size_hint_x: .2
+				text: 'Salir de Cuenta'
+				on_release: root.salir()
+
+	ScreenManager:
+        id: vista_manager
+		canvas.before:
+			Color:
+				rgba: hex('#FFFFFF')
+			Rectangle:
+				size: self.size
+				pos: self.pos
+		VistaPacientes:
+		    id: vista_pacientes
+		VistaInventario:
+		    id: vista_inventario
+        VistaConsultas:
+		    id: vista_consultas
+		VistaUsuarios:
+			id: vista_usuarios
+		VistaOperador:
+			id: vista_operador
+
+
+
+    BoxLayout:
+    	size_hint_y:.05
+
+
+<VistaInventario>:
+    canvas.before:   
+        Color: 
+            rgba: hex ('#00A99D') 
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    orientation: 'vertical'
+	name: 'Inventario'
+	BoxLayout:
+		BoxLayout:
+			padding: .5
+			orientation: 'vertical'
+			BoxLayout:
+				size_hint_y: .05
+				spacing: .5
+				LabelOscuro:
+					text: 'Id'
+					size_hint_x: .05
+				LabelOscuro:
+					text: 'Repuesto'
+					size_hint_x: .25
+				LabelOscuro:
+					text: 'Grupo'
+					size_hint_x: .20
+				LabelOscuro:
+					text: 'Unidad'
+					size_hint_x: .20
+				LabelOscuro:
+					text: 'Existencia'
+					size_hint_x: .1
+				LabelOscuro:
+					text: 'Costo'
+					size_hint_x: .1
+				LabelOscuro:
+					text: 'Precio'
+					size_hint_x: .1
+			AdminRV:
+				id: rv_productos
+				size_hint_y: .89
+				viewclass: 'SelectableInventarioLabel'
+		BoxLayout:
+			spacing: .5
+			size_hint_x: .2
+			orientation: 'vertical'
+			padding: .5
+			BotonOscuro:
+				text: 'Agregar Producto'
+				on_release: root.agregar_producto()
+			BotonOscuro:
+				text: 'Modificar Producto'
+				on_release: root.modificar_producto()
+			BotonOscuro:
+				text: 'Eliminar Producto'
+				on_release: root.eliminar_producto()

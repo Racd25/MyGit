@@ -1,0 +1,766 @@
+#:import hex kivy.utils.get_color_from_hex
+
+<BotonOscuro@Button>:
+    background_normal: ''
+    background_color: hex('#393939')
+
+<LabelOscuro@Label>:
+    canvas.before:   
+        Color: 
+            rgba: hex ('#393939') 
+        Rectangle:
+            size: self.size
+            pos: self.pos
+
+
+
+<AdminRV2>:
+    viewclass: 'SelectableOperadorLabel'
+    size_hint: 1, 1
+    SelectableRecycleBoxLayout:
+        default_size: None, dp(40)
+        default_size_hint: 1, None
+        size_hint_y: None
+        height: self.minimum_height
+        orientation: 'vertical'
+        multiselect: False
+        touch_multiselect: False
+
+<SelectablePagosLabel>:
+    canvas.before:
+        Color:
+            rgba: hex('#E8F5E8') if self.selected else hex('#F0F0F0')
+        Rectangle:
+            size: self.size
+            pos: self.pos
+
+    _id_ficha: _id_ficha
+    _operador: _operador
+    _descripcion: _descripcion
+    _cantidad: _cantidad
+    _precio: _precio
+    _total: _total
+    _fecha: _fecha
+    _neto: _neto  # ← Nuevo ID
+
+    Label:
+        id: _id_ficha
+        size_hint_x: .10
+        text: ''
+        color: (0,0,0,1)
+    Label:
+        id: _operador
+        size_hint_x: .15
+        text: ''
+        color: (0,0,0,1)
+    Label:
+        id: _descripcion
+        size_hint_x: .30
+        text: ''
+        color: (0,0,0,1)
+    Label:
+        id: _cantidad
+        size_hint_x: .10
+        text: ''
+        color: (0,0,0,1)
+    Label:
+        id: _precio
+        size_hint_x: .10
+        text: ''
+        color: (0,0,0,1)
+    Label:
+        id: _total
+        size_hint_x: .10  # ← Ajustado para dejar espacio
+        text: ''
+        color: (0,0,0,1)
+    Label:
+        id: _neto
+        size_hint_x: .08  # ← Ancho para Neto
+        text: ''
+        color: (0,0,0,1)
+    Label:
+        id: _fecha
+        size_hint_x: .08  # ← Ajustado
+        text: ''
+        color: (0,0,0,1)
+
+
+<VistaPagos>:
+    name: 'pagos'
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 10
+        spacing: 10
+        size_hint_y: 1
+
+        # Título
+        BoxLayout:
+            size_hint_y: None
+            height: 40
+            spacing: 10
+            LabelOscuro:
+                text: 'PAGOS (TRABAJOS TERMINADOS)'
+                size_hint_x: 1
+                font_size: '18sp'
+                bold: True
+                halign: 'center'
+                valign: 'middle'
+
+        # Filtros: Operador y Fechas
+        BoxLayout:
+            size_hint_y: None
+            height: 40
+            spacing: 10
+            Label:
+                text: 'Operador:'
+                size_hint_x: .12
+                color: (0,0,0,1)
+            Button:
+                id: btn_filtro_operador
+                text: 'Seleccionar operador'
+                size_hint_x: .20
+                on_release: root.abrir_popup_operadores()
+            Label:
+                text: 'Desde:'
+                size_hint_x: .08
+                color: (0,0,0,1)
+            Button:
+                id: btn_fecha_desde
+                text: '__/__/____'  # Texto inicial
+                size_hint_x: .12
+                on_release: root.abrir_calendario_desde()
+                background_normal: ''
+                background_color: (0.9, 0.9, 0.9, 1)
+                color: (0, 0, 0, 1)
+                halign: 'center'
+                valign: 'middle'
+                text_size: self.size
+                font_size: '14sp'
+            Label:
+                text: 'Hasta:'
+                size_hint_x: .08
+                color: (0,0,0,1)
+            Button:
+                id: btn_fecha_hasta
+                text: '__/__/____'  # Texto inicial
+                size_hint_x: .12
+                on_release: root.abrir_calendario_hasta()
+                background_normal: ''
+                background_color: (0.9, 0.9, 0.9, 1)
+                color: (0, 0, 0, 1)
+                halign: 'center'
+                valign: 'middle'
+                text_size: self.size
+                font_size: '14sp'
+
+        # Encabezados        
+        BoxLayout:
+            size_hint_y: None
+            height: 30
+            spacing: 2
+            LabelOscuro:
+                text: 'FICHA'
+                size_hint_x: .10
+                bold: True
+                color: (1,1,1,1)
+            LabelOscuro:
+                text: 'OPERADOR'
+                size_hint_x: .15
+                bold: True
+                color: (1,1,1,1)
+            LabelOscuro:
+                text: 'DESCRIPCIÓN'
+                size_hint_x: .30
+                bold: True
+                color: (1,1,1,1)
+            LabelOscuro:
+                text: 'CANT.'
+                size_hint_x: .10
+                bold: True
+                color: (1,1,1,1)
+            LabelOscuro:
+                text: 'PRECIO'
+                size_hint_x: .10
+                bold: True
+                color: (1,1,1,1)
+            LabelOscuro:
+                text: 'TOTAL'
+                size_hint_x: .10
+                bold: True
+                color: (1,1,1,1)
+            LabelOscuro:
+                text: 'FECHA'
+                size_hint_x: .08
+                bold: True
+                color: (1,1,1,1)
+            LabelOscuro:
+                text: 'NETO'
+                size_hint_x: .08
+                bold: True
+                color: (1,1,1,1)
+
+        # Lista de pagos
+        AdminRV2:
+            id: rv_pagos
+            viewclass: 'SelectablePagosLabel'
+            size_hint_y: 1
+            scroll_type: ['bars']
+            scroll_wheel_distance: 100
+
+
+        # Total y botones
+        BoxLayout:
+            size_hint_y: None
+            height: 50
+            spacing: 10
+
+            # Fecha en esquina inferior izquierda
+            Label:
+                id: lbl_fecha_actual
+                text: '00/00/0000'
+                size_hint_x: 0.20
+                color: (0, 0, 0, 1)
+                halign: 'left'
+                valign: 'middle'
+                text_size: self.size
+
+
+            Label:
+                text: 'Total general:'
+                size_hint_x: 0.40
+                color: (0, 0, 0, 1)
+                halign: 'right'
+                valign: 'middle'
+                text_size: self.size
+            Label:
+                id: lbl_total_general
+                text: '$ 0.00'
+                size_hint_x: 0.15
+                color: (0, 0, 0, 1)
+                bold: True
+                halign: 'left'
+                valign: 'middle'
+                text_size: self.size
+
+            Label:
+                text: 'Neto general:'
+                size_hint_x: 0.10
+                color: (0, 0, 0, 1)
+                halign: 'right'
+                valign: 'middle'
+                text_size: self.size
+            Label:
+                id: lbl_neto_general
+                text: '$ 0.00'
+                size_hint_x: 0.15
+                color: (0, 0, 0, 1)
+                bold: True
+                halign: 'left'
+                valign: 'middle'
+                text_size: self.size
+
+            Button:
+                text: 'Generar Pago'
+                size_hint_x: 0.2
+                on_release: root.generar_pago()
+
+
+
+<VistaOperador>:
+    name: 'operadores'
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 10
+        spacing: 10
+        size_hint_y: 1  # Ocupa todo el alto del Screen
+        height: self.minimum_height  # Ajusta la altura al contenido (opcional si usas ScrollView)
+
+        # Título
+        BoxLayout:
+            size_hint_y: None
+            height: 40
+            spacing: 10
+            LabelOscuro:
+                text: 'TABLA DE OPERADORES'
+                size_hint_x: 1  # Ocupa todo el ancho
+                font_size: '18sp'
+                bold: True
+                halign: 'center'
+                valign: 'middle'
+
+        # Barra de búsqueda
+        BoxLayout:
+            size_hint_y: None
+            height: 40
+            spacing: 10
+            Label:
+                text: 'Buscar:'
+                size_hint_x: None
+                width: 80
+                color: (0,0,0,1)
+            TextInput:
+                id: filtro_busqueda
+                multiline: False
+                hint_text: 'Nombre o código'
+                on_text: root.filtrar_agenda(self.text)
+
+        # Encabezados de tabla
+        BoxLayout:
+            size_hint_y: None
+            height: 30
+            spacing: 2
+            LabelOscuro:
+                text: 'CODIGO'
+                size_hint_x: .05
+                bold: True
+                color: (1,1,1,1)
+            LabelOscuro:
+                text: 'NOMBRE'
+                size_hint_x: .25
+                bold: True
+                color: (1,1,1,1)
+            LabelOscuro:
+                text: 'Porcentaje %'
+                size_hint_x: .15
+                bold: True
+                color: (1,1,1,1)
+            LabelOscuro:
+                text: 'TASA'
+                size_hint_x: .15
+                bold: True
+                color: (1,1,1,1)
+
+        # Lista de operadores (con scroll si hay muchas filas)
+        AdminRV2:
+            id: rv_operador
+            viewclass: 'SelectableOperadorLabel'
+            size_hint_y: 1  # ¡Importante! Usa todo el espacio vertical restante
+            scroll_type: ['bars']
+            scroll_wheel_distance: 100
+
+        # Botones al final
+        BoxLayout:
+            size_hint_y: None
+            height: 50
+            spacing: 10
+            Button:
+                text: 'Editar'
+                size_hint_x: 0.2
+                on_release: root.editar_operador()
+            Button:
+                text: 'Eliminar'
+                size_hint_x: 0.2
+                on_release: root.eliminar_operador()
+            Button:
+                text: 'Nuevo'
+                size_hint_x: 0.2
+                on_release: root.nuevo_operador()
+            Button:
+                text: 'Trabajos'
+                size_hint_x: 0.2
+                on_release: root.añadir_trabajos()
+
+<SelectableTrabajosLabel>:
+    canvas.before:
+        Color:
+            rgba: (hex('#FFECEC') if not root.terminado else (hex('#E8F5E8') if root.selected else hex('#F0F0F0')))
+        Rectangle:
+            size: self.size
+            pos: self.pos
+
+    _id_ficha: _id_ficha
+    _operador: _operador
+    _descripcion: _descripcion
+    _cantidad: _cantidad
+    _precio: _precio
+    _total: _total
+    _terminado: _terminado
+
+    Label:
+        id: _id_ficha
+        size_hint_x: .10
+        text: ''
+        color: (0,0,0,1)
+    Label:
+        id: _operador
+        size_hint_x: .15
+        text: ''
+        color: (0,0,0,1)
+    Label:
+        id: _descripcion
+        size_hint_x: .30
+        text: ''
+        color: (0,0,0,1)
+    Label:
+        id: _cantidad
+        size_hint_x: .10
+        text: ''
+        color: (0,0,0,1)
+    Label:
+        id: _precio
+        size_hint_x: .10
+        text: ''
+        color: (0,0,0,1)
+    Label:
+        id: _total
+        size_hint_x: .10
+        text: ''
+        color: (0,0,0,1)
+    Label:
+        id: _terminado
+        size_hint_x: .08
+        text: ''
+        color: (0,0,0,1)
+
+<VistaTrabajos>:
+    name: 'trabajos'
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 10
+        spacing: 10
+        size_hint_y: 1
+
+        # Título
+        BoxLayout:
+            size_hint_y: None
+            height: 40
+            spacing: 10
+            LabelOscuro:
+                text: 'REGISTRO DE TRABAJOS'
+                size_hint_x: 1
+                font_size: '18sp'
+                bold: True
+                halign: 'center'
+                valign: 'middle'
+
+        # Filtros
+        BoxLayout:
+            size_hint_y: None
+            height: 40
+            spacing: 10
+
+            Label:
+                text: 'Operador:'
+                size_hint_x: .08
+                color: (0,0,0,1)
+            Button:
+                id: btn_filtro_operador
+                text: 'Operadores: Todos'
+                size_hint_x: .18
+                on_release: root.abrir_popup_operadores()
+
+            Label:
+                text: 'Estado:'
+                size_hint_x: .08
+                color: (0,0,0,1)
+            Spinner:
+                id: spinner_estado_terminado
+                text: 'Ambos'
+                values: ['Ambos', 'Terminados', 'No Terminados']
+                size_hint_x: .12
+                on_text: root.on_estado_terminado_change(self.text)
+
+
+
+            Label:
+                text: 'Ficha:'
+                size_hint_x: .06
+                color: (0,0,0,1)
+            Spinner:
+                id: spinner_tipo_ficha
+                text: 'Ambas'
+                values: ['Ambas', 'Torno', 'Rectificadora']
+                size_hint_x: .12
+                on_text: root.on_tipo_ficha_change(self.text)
+
+            Label:
+                text: 'Desde:'
+                size_hint_x: .08
+                color: (0,0,0,1)
+            Button:
+                size_hint_x: .12
+                id: btn_fecha_desde
+                text: '__/__/____'
+                on_release: root.abrir_calendario_desde()
+            Label:
+                text: 'Hasta:'
+                size_hint_x: .08
+                color: (0,0,0,1)
+
+
+            Button:
+                size_hint_x: .12
+                id: btn_fecha_hasta
+                text: '__/__/____'
+                on_release: root.abrir_calendario_hasta()
+
+        # Encabezados de tabla
+        BoxLayout:
+            size_hint_y: None
+            height: 30
+            spacing: 2
+            LabelOscuro:
+                text: 'FICHA'
+                size_hint_x: .10
+                bold: True
+                color: (1,1,1,1)
+            LabelOscuro:
+                text: 'OPERADOR'
+                size_hint_x: .15
+                bold: True
+                color: (1,1,1,1)
+            LabelOscuro:
+                text: 'DESCRIPCIÓN'
+                size_hint_x: .30
+                bold: True
+                color: (1,1,1,1)
+            LabelOscuro:
+                text: 'CANT.'
+                size_hint_x: .10
+                bold: True
+                color: (1,1,1,1)
+            LabelOscuro:
+                text: 'PRECIO'
+                size_hint_x: .10
+                bold: True
+                color: (1,1,1,1)
+            LabelOscuro:
+                text: 'TOTAL'
+                size_hint_x: .10
+                bold: True
+                color: (1,1,1,1)
+            LabelOscuro:
+                text: 'ESTADO'
+                size_hint_x: .08
+                bold: True
+                color: (1,1,1,1)
+
+        # Lista de trabajos
+        AdminRV2:
+            id: rv_trabajos
+            viewclass: 'SelectableTrabajosLabel'
+            size_hint_y: 1
+            scroll_type: ['bars']
+            scroll_wheel_distance: 100
+
+        # Total y botones
+        BoxLayout:
+            size_hint_y: None
+            height: 50
+            spacing: 10
+
+            # Totalizador
+            Label:
+                text: 'Total general:'
+                size_hint_x: 0.85
+                color: (0, 0, 0, 1)
+                halign: 'right'
+                valign: 'middle'
+                text_size: self.size
+            Label:
+                id: lbl_total_general
+                text: '₡0.00'
+                size_hint_x: 0.15
+                color: (0, 0, 0, 1)
+                bold: True
+                halign: 'left'
+                valign: 'middle'
+                text_size: self.size
+
+            # Botones
+            Button:
+                text: 'Actualizar'
+                size_hint_x: 0.2
+                on_release: root.actualizar()
+
+
+
+<SelectableOperadorLabel>:
+    canvas.before:
+        Color:
+            rgba: hex('#E8F5E8') if self.selected else hex('#F0F0F0')
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    # No uses un BoxLayout anidado
+    # Los widgets deben estar directamente en el contenedor
+    _hashtag: _hashtag
+    _nombre: _nombre
+    _porcentaje: _porcentaje
+    _tasa: _tasa
+
+    Label:
+        id: _hashtag
+        size_hint_x: .05
+        text: ''
+        color: (0,0,0,1)
+    Label:
+        id: _nombre
+        size_hint_x: .25
+        text: ''
+        color: (0,0,0,1)
+    Label:
+        id: _porcentaje
+        size_hint_x: .15
+        text: ''
+        color: (0,0,0,1)
+    Label:
+        id: _tasa
+        size_hint_x: .15
+        text: ''
+        color: (0,0,0,1)
+
+<VistaMenuO>:
+    name: 'menu'
+    canvas.before:
+        Color:
+            rgba: hex('#FFFFFF')  # Fondo blanco
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 30
+        spacing: 25
+
+
+        Image:
+            source: 'Logo_inrema_blanco2.png'
+            size_hint_y: 1.9
+            allow_stretch: True
+            keep_ratio: True
+
+        # Título centrado
+        Label:
+            text: 'OPERADORES'
+            font_size: 28
+            bold: True
+            color: (0, 0, 0, 1)
+            size_hint_y: None
+            height: 60
+            halign: 'center'
+            text_size: self.size
+            valign: 'middle'
+
+        # Espacio pequeño arriba de los botones
+        BoxLayout:
+            size_hint_y: None
+            height: 20
+
+        # Cuadrícula de botones (2x2)
+        GridLayout:
+            cols: 2
+            rows: 2
+            size_hint_y: None
+            height: 160
+            spacing: 20
+            padding: [10, 5, 10, 5]
+
+            BotonOscuro:
+                text: 'Lista de Operadores'
+                font_size: 20
+                on_release: root.ir_a('operadores')
+
+            BotonOscuro:
+                text: 'Pagos'
+                font_size: 20
+                on_release: root.ir_a('pagos')
+
+            BotonOscuro:
+                text: 'Manos de Obra'
+                font_size: 20
+                on_release: root.ir_a('trabajos')
+
+            BotonOscuro:
+                text: 'LOREN IPSUM'
+                font_size: 20
+                on_release: root.ir_a('otro')
+
+        # Espacio flexible ABAJO para empujar todo hacia arriba
+        BoxLayout:
+            size_hint_y: 1  # ← Este absorbe todo el espacio restante
+
+
+
+<CustomDropDown1>:
+	canvas.before:
+		Color:
+			rgba: hex('#393939')
+		Rectangle:
+			size: self.size
+			pos: self.pos
+    Button:
+        id: drop_inventario
+        text: 'Inventario'
+        size_hint_y: None
+        height: 44
+        on_release: root.salir2()
+    Button:
+        text: 'Fichas'
+        size_hint_y: None
+        height: 44
+        on_release: root.pacientes()
+    Button:
+        id: drop_operadores
+        text: 'Operadores'
+        size_hint_y: None
+        height: 44
+        on_release: root.a_operadores()
+
+
+
+
+
+
+<AdminO>:
+    orientation: 'vertical'
+    canvas.before:
+        Color:
+            rgba: hex('#FCE883')
+        Rectangle:
+            size: self.size
+            pos: self.pos
+
+    BoxLayout:
+        orientation: 'horizontal'
+        size_hint_y: .1
+        padding: .1
+        spacing: .25
+        BotonOscuro:
+            id: cambiar_vista
+            size_hint_x: .2
+            text: 'Cambiar Vista'
+       #     on_release: root.cambiar_vista()
+
+        BotonOscuro:
+            id: volver
+            size_hint_x: .1
+            text: 'Menú'
+            on_release: root.salir2()
+        Label:
+            id: notification
+            size_hint_x: .5
+        BotonOscuro:
+            id: boton_signout
+            size_hint_x: .2
+            text: 'Salir de Cuenta'
+            on_release: root.salirx()
+
+    ScreenManager:
+        id: vista_manager2
+        canvas.before:
+            Color:
+                rgba: hex('#FFFFFF')
+            Rectangle:
+                size: self.size
+                pos: self.pos
+        
+        VistaMenuO:
+        VistaOperador:
+        VistaPagos:
+        VistaTrabajos:
+
+    BoxLayout:
+        size_hint_y:.05
+

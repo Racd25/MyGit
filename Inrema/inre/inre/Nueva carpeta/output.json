@@ -1,0 +1,668 @@
+[
+  {
+    "id": 0,
+    "marca": "FORD",
+    "modelo": "N/T",
+    "cilindraje": "3CL"
+  },
+  {
+    "id": 1,
+    "marca": "JHON DEERE",
+    "modelo": "200LC",
+    "cilindraje": "6CL"
+  },
+  {
+    "id": 2,
+    "marca": "CUMINS",
+    "modelo": "4BT",
+    "cilindraje": "4CL"
+  },
+  {
+    "id": 3,
+    "marca": "FORD",
+    "modelo": "TURPIAL",
+    "cilindraje": "4CL"
+  },
+  {
+    "id": 4,
+    "marca": "MAZDA",
+    "modelo": "ALLEGRO",
+    "cilindraje": "4CL"
+  },
+  {
+    "id": 5,
+    "marca": "MACK",
+    "modelo": "700",
+    "cilindraje": "6CL"
+  },
+  {
+    "id": 6,
+    "marca": "MACK",
+    "modelo": "676",
+    "cilindraje": "6CL"
+  },
+  {
+    "id": 7,
+    "marca": "SUZUKI",
+    "modelo": "GRAN VITARA",
+    "cilindraje": "4CL"
+  },
+  {
+    "id": 8,
+    "marca": "CORSA",
+    "modelo": "1,6",
+    "cilindraje": "4CL"
+  },
+  {
+    "id": 9,
+    "marca": "DAEWOO",
+    "modelo": "TICO",
+    "cilindraje": "3CL"
+  },
+  {
+    "id": 10,
+    "marca": "LOMBARDINI",
+    "modelo": "1CY2",
+    "cilindraje": "1CL"
+  },
+  {
+    "id": 11,
+    "marca": "COMPRESOR",
+    "modelo": "15HP",
+    "cilindraje": "2CL"
+  },
+  {
+    "id": 12,
+    "marca": "FIAT",
+    "modelo": "130-90",
+    "cilindraje": "6CL"
+  },
+  {
+    "id": 13,
+    "marca": "MITSUBUSHI",
+    "modelo": "L300",
+    "cilindraje": "6CL"
+  },
+  {
+    "id": 14,
+    "marca": "IVECO",
+    "modelo": "TECTO",
+    "cilindraje": "6CL"
+  },
+  {
+    "id": 15,
+    "marca": "CHERY",
+    "modelo": "ARAUCA",
+    "cilindraje": "4CL"
+  },
+  {
+    "id": 16,
+    "marca": "CHERY",
+    "modelo": "ARAUCA",
+    "cilindraje": "4CL"
+  },
+  {
+    "id": 17,
+    "marca": "IVECO",
+    "modelo": "DAILY",
+    "cilindraje": "4CL"
+  },
+  {
+    "id": 18,
+    "marca": "FORD",
+    "modelo": "SIERRA",
+    "cilindraje": "260"
+  },
+  {
+    "id": 19,
+    "marca": "CHEVROLET",
+    "modelo": "BLASER",
+    "cilindraje": "331"
+  },
+  {
+    "id": 20,
+    "marca": "TOYOTA",
+    "modelo": "KABAK",
+    "cilindraje": "6CL"
+  },
+  {
+    "id": 21,
+    "marca": "MACK",
+    "modelo": "E7",
+    "cilindraje": "6CL"
+  },
+  {
+    "id": 22,
+    "marca": "TOOTA",
+    "modelo": "KAVAC",
+    "cilindraje": "6CL"
+  },
+  {
+    "id": 23,
+    "marca": "PERKINS",
+    "modelo": "VALTRA BR88",
+    "cilindraje": "4CL"
+  },
+  {
+    "id": 24,
+    "marca": "IZUZO",
+    "modelo": "NPR",
+    "cilindraje": "4CL"
+  },
+  {
+    "id": 25,
+    "marca": "CAT",
+    "modelo": "3306",
+    "cilindraje": "6CL"
+  },
+  {
+    "id": 26,
+    "marca": "CAT",
+    "modelo": "3126",
+    "cilindraje": "6CL"
+  },
+  {
+    "id": 27,
+    "marca": "ISUZO",
+    "modelo": "NPR",
+    "cilindraje": "4CL"
+  },
+  {
+    "id": 28,
+    "marca": "TOYOTA",
+    "modelo": "4,0",
+    "cilindraje": "6CL"
+  },
+  {
+    "id": 29,
+    "marca": "SUZUKI",
+    "modelo": "RANGER",
+    "cilindraje": "2CL"
+  },
+  {
+    "id": 30,
+    "marca": "CHEVROLET",
+    "modelo": "OPTRA",
+    "cilindraje": "4CL"
+  },
+  {
+    "id": 31,
+    "marca": "TOYOTA",
+    "modelo": "2F",
+    "cilindraje": "6CL"
+  },
+  {
+    "id": 32,
+    "marca": "CHERRY",
+    "modelo": "ARAUCA",
+    "cilindraje": "4CL"
+  },
+  {
+    "id": 33,
+    "marca": "CAT",
+    "modelo": "3304",
+    "cilindraje": "4CL"
+  },
+  {
+    "id": 34,
+    "marca": "PERKINS",
+    "modelo": "399",
+    "cilindraje": "6CL"
+  },
+  {
+    "id": 35,
+    "marca": "IVECO",
+    "modelo": "DAILY",
+    "cilindraje": "4CL"
+  },
+  {
+    "id": 36,
+    "marca": "JOHN DEERE",
+    "modelo": "6068",
+    "cilindraje": "6CL"
+  },
+  {
+    "id": 37,
+    "marca": "FORD",
+    "modelo": "FIESTA",
+    "cilindraje": "4CL"
+  },
+  {
+    "id": 38,
+    "marca": "INTERNACIONAL",
+    "modelo": "4.66",
+    "cilindraje": "6CL"
+  },
+  {
+    "id": 39,
+    "marca": "PERKINS",
+    "modelo": "268",
+    "cilindraje": "4CL"
+  },
+  {
+    "id": 40,
+    "marca": "HIUNDAY",
+    "modelo": "TUCSON",
+    "cilindraje": "4CL"
+  },
+  {
+    "id": 41,
+    "marca": "MITSUBISHI",
+    "modelo": "CANTER/Ffuso",
+    "cilindraje": "4CL"
+  },
+  {
+    "id": 42,
+    "marca": "PERKINS",
+    "modelo": "VALTRA",
+    "cilindraje": "4CL"
+  },
+  {
+    "id": 43,
+    "marca": "FORD",
+    "modelo": "302",
+    "cilindraje": "8V"
+  },
+  {
+    "id": 44,
+    "marca": "MACK",
+    "modelo": "300",
+    "cilindraje": "6CL"
+  },
+  {
+    "id": 45,
+    "marca": "FORD",
+    "modelo": "TRITON",
+    "cilindraje": "6CL"
+  },
+  {
+    "id": 46,
+    "marca": "JONH",
+    "modelo": "4640",
+    "cilindraje": "6CL"
+  },
+  {
+    "id": 47,
+    "marca": "FORD",
+    "modelo": "8030",
+    "cilindraje": "6CL"
+  },
+  {
+    "id": 48,
+    "marca": "INTERNACIONAL",
+    "modelo": "4BT",
+    "cilindraje": "6CL"
+  },
+  {
+    "id": 49,
+    "marca": "FORD",
+    "modelo": "104",
+    "cilindraje": "6CL"
+  },
+  {
+    "id": 50,
+    "marca": "FORD",
+    "modelo": "815",
+    "cilindraje": "4CL"
+  },
+  {
+    "id": 51,
+    "marca": "FIAT",
+    "modelo": "104",
+    "cilindraje": "6CL"
+  },
+  {
+    "id": 52,
+    "marca": "NEW HOLLAND",
+    "modelo": null,
+    "cilindraje": "6CL"
+  },
+  {
+    "id": 53,
+    "marca": "CUMINS",
+    "modelo": "LAK",
+    "cilindraje": "4CL"
+  },
+  {
+    "id": 54,
+    "marca": "TOYOTA",
+    "modelo": "JEEP",
+    "cilindraje": "6CL"
+  },
+  {
+    "id": 55,
+    "marca": "IVECO",
+    "modelo": "DAILY",
+    "cilindraje": "4CL"
+  },
+  {
+    "id": 56,
+    "marca": "CUMINS",
+    "modelo": "4BT",
+    "cilindraje": "6CL"
+  },
+  {
+    "id": 57,
+    "marca": "CAT",
+    "modelo": "D8",
+    "cilindraje": "6CL"
+  },
+  {
+    "id": 58,
+    "marca": "CUMINS",
+    "modelo": "6BT",
+    "cilindraje": "6CL"
+  },
+  {
+    "id": 59,
+    "marca": "NISSAN",
+    "modelo": "FRONTIER",
+    "cilindraje": "4CL"
+  },
+  {
+    "id": 60,
+    "marca": "CHEVROLET",
+    "modelo": "PALIO",
+    "cilindraje": "8CL"
+  },
+  {
+    "id": 61,
+    "marca": "FORD",
+    "modelo": "ECOSPORT",
+    "cilindraje": "4CL"
+  },
+  {
+    "id": 62,
+    "marca": "TOYOTA",
+    "modelo": "4,5",
+    "cilindraje": "6CL"
+  },
+  {
+    "id": 63,
+    "marca": "CHEVROLET",
+    "modelo": "EXPLORET",
+    "cilindraje": "6CL"
+  },
+  {
+    "id": 64,
+    "marca": "TOYOTA",
+    "modelo": "HILUX",
+    "cilindraje": "4CL"
+  },
+  {
+    "id": 65,
+    "marca": "PERKINS",
+    "modelo": "PLANTA CHINA",
+    "cilindraje": "4CL"
+  },
+  {
+    "id": 66,
+    "marca": "PEUGEOT",
+    "modelo": "PEUGEOT",
+    "cilindraje": "4CL"
+  },
+  {
+    "id": 67,
+    "marca": "JONH DEERE",
+    "modelo": null,
+    "cilindraje": "4CL"
+  },
+  {
+    "id": 68,
+    "marca": "PERKINS",
+    "modelo": "9.500",
+    "cilindraje": "6CL"
+  },
+  {
+    "id": 69,
+    "marca": "PERKINS",
+    "modelo": "354",
+    "cilindraje": "6CL"
+  },
+  {
+    "id": 70,
+    "marca": "CHERY",
+    "modelo": "ARAUCA",
+    "cilindraje": "4CL"
+  },
+  {
+    "id": 71,
+    "marca": "TUFLON",
+    "modelo": "COMPRESOR",
+    "cilindraje": "2CL"
+  },
+  {
+    "id": 72,
+    "marca": "ISUZO",
+    "modelo": "6BD1",
+    "cilindraje": "6CL"
+  },
+  {
+    "id": 73,
+    "marca": "TOYOTA",
+    "modelo": "TERIO",
+    "cilindraje": "4CL"
+  },
+  {
+    "id": 74,
+    "marca": "CHEVROLET",
+    "modelo": "CORSA",
+    "cilindraje": "4CL"
+  },
+  {
+    "id": 75,
+    "marca": "ZUZUKI",
+    "modelo": "RANGEL",
+    "cilindraje": "2CL"
+  },
+  {
+    "id": 66,
+    "marca": "MITSUBISHI",
+    "modelo": "659",
+    "cilindraje": "4CL"
+  },
+  {
+    "id": 67,
+    "marca": "VELARUS",
+    "modelo": "1221",
+    "cilindraje": "6CL"
+  },
+  {
+    "id": 68,
+    "marca": "NEUHOLLAM",
+    "modelo": "JM 135",
+    "cilindraje": "6CL"
+  },
+  {
+    "id": 69,
+    "marca": "FORD",
+    "modelo": "7.000",
+    "cilindraje": "6CL"
+  },
+  {
+    "id": 70,
+    "marca": "CAT",
+    "modelo": "3116",
+    "cilindraje": "4CL"
+  },
+  {
+    "id": 71,
+    "marca": "TOYOTA",
+    "modelo": "TUNDRA",
+    "cilindraje": "8V"
+  },
+  {
+    "id": 72,
+    "marca": "TOYOTA",
+    "modelo": "RUNNER",
+    "cilindraje": "6CL"
+  },
+  {
+    "id": 73,
+    "marca": "RENOL",
+    "modelo": "1,6",
+    "cilindraje": "4CL"
+  },
+  {
+    "id": 74,
+    "marca": "CAT",
+    "modelo": "3208",
+    "cilindraje": "8CL"
+  },
+  {
+    "id": 75,
+    "marca": "IVECO",
+    "modelo": "TRAILY",
+    "cilindraje": "6CL"
+  },
+  {
+    "id": 76,
+    "marca": "MACK",
+    "modelo": "673",
+    "cilindraje": "6CL"
+  },
+  {
+    "id": 77,
+    "marca": "TOYOTA",
+    "modelo": "FORTUNER",
+    "cilindraje": "6CL"
+  },
+  {
+    "id": 78,
+    "marca": "DON FENG",
+    "modelo": "STRAILY",
+    "cilindraje": "1CL"
+  },
+  {
+    "id": 79,
+    "marca": "FORD",
+    "modelo": "GERMARY",
+    "cilindraje": "6CL"
+  },
+  {
+    "id": 80,
+    "marca": "TOYOTA",
+    "modelo": "3F",
+    "cilindraje": "6CL"
+  },
+  {
+    "id": 81,
+    "marca": "FORD",
+    "modelo": "SUPER DUTTY",
+    "cilindraje": "8V"
+  },
+  {
+    "id": 82,
+    "marca": "TOYOTA",
+    "modelo": "DINA",
+    "cilindraje": "4CL"
+  },
+  {
+    "id": 83,
+    "marca": "CAT",
+    "modelo": "D7 48A",
+    "cilindraje": "4CL"
+  },
+  {
+    "id": 84,
+    "marca": "DAEWO",
+    "modelo": "CIELO",
+    "cilindraje": "4CL"
+  },
+  {
+    "id": 85,
+    "marca": "MACK",
+    "modelo": "315",
+    "cilindraje": "6CL"
+  },
+  {
+    "id": 86,
+    "marca": "MITSUBISHI",
+    "modelo": "FB-517",
+    "cilindraje": "6CL"
+  },
+  {
+    "id": 87,
+    "marca": "PERKINS",
+    "modelo": "1006",
+    "cilindraje": "6CL"
+  },
+  {
+    "id": 88,
+    "marca": "FORD",
+    "modelo": "2000",
+    "cilindraje": "6CL"
+  },
+  {
+    "id": 89,
+    "marca": "MACK",
+    "modelo": "675",
+    "cilindraje": "6CL"
+  },
+  {
+    "id": 90,
+    "marca": "HOWO",
+    "modelo": "SINOTRUCK",
+    "cilindraje": "6CL"
+  },
+  {
+    "id": 91,
+    "marca": "PERKINS",
+    "modelo": "291",
+    "cilindraje": "4CL"
+  },
+  {
+    "id": 92,
+    "marca": "FORD",
+    "modelo": "256",
+    "cilindraje": "6CL"
+  },
+  {
+    "id": 93,
+    "marca": "PERKINS",
+    "modelo": "285",
+    "cilindraje": "4CL"
+  },
+  {
+    "id": 94,
+    "marca": "CAT",
+    "modelo": "966",
+    "cilindraje": "6CL"
+  },
+  {
+    "id": 95,
+    "marca": "CHEVROLET",
+    "modelo": "NKR",
+    "cilindraje": "4CL"
+  },
+  {
+    "id": 96,
+    "marca": "LANDINIS",
+    "modelo": "13,000",
+    "cilindraje": "6CL"
+  },
+  {
+    "id": 97,
+    "marca": "CUMMINS",
+    "modelo": "4BT",
+    "cilindraje": "4CL"
+  },
+  {
+    "id": 98,
+    "marca": "DEUTZ",
+    "modelo": "6270",
+    "cilindraje": "4CL"
+  },
+  {
+    "id": 99,
+    "marca": "TOYOTA",
+    "modelo": "WILLY",
+    "cilindraje": "4CL"
+  },
+  {
+    "id": 100,
+    "marca": "BELARUS",
+    "modelo": "N/T",
+    "cilindraje": "4CL"
+  }
+]

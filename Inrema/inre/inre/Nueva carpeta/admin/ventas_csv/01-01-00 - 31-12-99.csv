@@ -1,0 +1,14 @@
+nombre,codigo,cantidad,precio,precio_total
+leche 1l,111,13,20.0,260.0
+shampoo,666,13,1000.0,13000.0
+medicina,400,5,15.0,75.0
+alimento para perro 20kg,555,1,750.0,750.0
+helado 2l,444,11,80.0,880.0
+Producto/Servicio no encontrado,90,10,20.0,200.0
+cereal 500g,222,1,50.5,50.5
+corte de uñas,53,2,5.0,10.0
+papel higiénico 4 rollos,777,1,35.5,35.5
+operacion,61,1,51.0,51.0
+operacion,567,1,51.0,51.0
+castracion,98,1,42.0,42.0
+,,,,15405.0

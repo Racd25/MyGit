@@ -1,0 +1,33 @@
+import sqlite3
+from sqlite3 import Error
+
+def mostrar_tablas(db_path):
+    # Conectar a la base de datos
+    try:
+        conexion = sqlite3.connect(db_path)
+        cursor = conexion.cursor()
+
+        # Consultar las tablas de la base de datos
+        cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
+        tablas = cursor.fetchall()
+
+        # Mostrar las tablas encontradas
+        if tablas:
+            print("Tablas en la base de datos:")
+            for tabla in tablas:
+                print(f"  - {tabla[0]}")
+        else:
+            print("No se encontraron tablas en la base de datos.")
+
+    except sqlite3.Error as e:
+        print(f"Error al acceder a la base de datos: {e}")
+    finally:
+        # Cerrar la conexión
+        if conexion:
+            conexion.close()
+
+# Uso del script
+if __name__ == "__main__":
+    # Cambia 'tu_base_de_datos.db' por la ruta de tu archivo .db o .sqlite
+    ruta_db = 'tu_base_de_datos.db'
+    mostrar_tablas("pdvDB.sqlite")

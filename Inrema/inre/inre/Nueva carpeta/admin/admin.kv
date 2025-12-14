@@ -1,0 +1,2607 @@
+#:import hex kivy.utils.get_color_from_hex
+
+<BotonOscuro@Button>:
+	background_normal: ''
+	background_color: hex('#393939')
+
+<LabelOscuro@Label>:
+	canvas.before:
+		Color:
+			rgba: hex('#393939')
+		Rectangle:
+			size: self.size
+			pos: self.pos
+
+
+<AdminRV>:
+    SelectableRecycleBoxLayout:
+        default_size: None, dp(36)
+        default_size_hint: 1, None
+        size_hint_y: None
+        height: self.minimum_height
+        orientation: 'vertical'
+        multiselect: False
+        touch_multiselect: False
+
+
+
+
+<CustomDropDown>:
+	canvas.before:
+		Color:
+			rgba: hex('#393939')
+		Rectangle:
+			size: self.size
+			pos: self.pos
+    Button:
+        id: drop_inventario
+        text: 'Inventario'
+        size_hint_y: None
+        height: 44
+        on_release: root.salir2()
+    Button:
+        text: 'Fichas'
+        size_hint_y: None
+        height: 44
+        on_release: root.ir_a_fichas()
+    Button:
+        id: drop_operadores
+        text: 'Operadores'
+        size_hint_y: None
+        height: 44
+        on_release: root.a_operadores()
+	Button:
+        id: drop_usarios
+        text: 'Usuarios'
+        size_hint_y: None
+        height: 44
+        on_release: root.ir_a_usuarios()
+
+<AdminWindow>:
+	id: main_win
+	orientation: 'vertical'
+	canvas.before:
+		Color:
+			rgba: hex('#FCE883')
+		Rectangle:
+			size: self.size
+			pos: self.pos
+
+	BoxLayout:
+		orientation: 'vertical'
+		size_hint_y: .1
+		BoxLayout:
+			padding: .1
+			spacing: .2
+			BotonOscuro:
+				id: cambiar_vista
+				size_hint_x: .2
+				text: 'Cambiar Vista'
+				on_release: root.cambiar_vista()
+			Label:
+				id: mostrat_usuario
+				size_hint_x: .2
+				color: hex('#000000')
+			Label:
+				size_hint_x: .2
+			Label:
+				id: notification
+				size_hint_x: .2
+			BotonOscuro:
+				id: boton_signout
+				size_hint_x: .2
+				text: 'Salir de Cuenta'
+				on_release: root.salirx()
+
+	ScreenManager:
+        id: vista_manager
+		canvas.before:
+			Color:
+				rgba: hex('#FFFFFF')
+			Rectangle:
+				size: self.size
+				pos: self.pos
+		VistaFichas:
+			id: vista_fichas
+		VistaUsers:
+			id: vista_users
+
+
+
+    BoxLayout:
+    	size_hint_y:.05
+
+
+
+<FichaRectificadora>:
+    size_hint: .9, .95
+    auto_dismiss: False
+    title: ''  # ← Muy importante: deja vacío para que Python lo controle
+    BoxLayout:
+        orientation: 'horizontal'  # ← Cambiado a horizontal para dividir en 2 partes
+        padding: 20
+        spacing: 10
+        # ✅ PARTE IZQUIERDA (90% - Contenido principal)
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint_x: 0.9  # ← 90% del ancho
+            size_hint_y: 1.0  # ← Asegurar que ocupe toda la altura
+            padding: 0
+            spacing: 10
+            # Mensaje de estado
+            Label:
+                id: mensaje_estado
+                size_hint_y: None
+                height: 30
+                text: ''
+                color: 1, 1, 1, 1
+            
+            
+            ScrollView:
+                BoxLayout:
+                    orientation: 'vertical'
+                    size_hint_y: None
+                    height: self.minimum_height
+                    spacing: 10
+
+                    # Información del Cliente
+                    BoxLayout: 
+                        orientation: 'horizontal'
+                       
+                        size_hint_y: None
+                        height: 30
+                        spacing: 10
+                        LabelOscuro:
+                            text: 'DATOS DEL CLIENTE'
+                            size_hint_y: None
+                            height: '30sp'
+                            font_size: 20
+                            size_hint_x: 0.88
+                            bold: True
+
+                        Button:
+                            id: mas_observacion
+                            text: 'Buscar Cliente'
+                            size_hint_x: 0.12
+                            background_color: 0.2, 0.2, 0.7, 1
+                            on_release: root.abrir_popup_clientes() 
+
+
+
+                    BoxLayout:
+                        orientation: 'horizontal'
+                        size_hint_y: None
+                        height: 30
+                        spacing: 10
+                        Label:
+                            text: 'RIF:'
+                            size_hint_x: 0.1
+                            color: 1, 1, 1, 1
+
+                        Spinner:
+                            id: tipo_rif
+                            text: 'V-'
+                            values: ['V-', 'E-', 'P-', 'J-', 'G-', 'R-']
+                            size_hint_x: 0.05
+                        TextInput:
+                            id: nuevo_rif
+                            size_hint_x: 0.2
+                        Label:
+                            text: 'CLIENTE:'
+                            size_hint_x: 0.05
+                            color: 1, 1, 1, 1
+                        TextInput:
+                            id: nuevo_cliente
+                            size_hint_x: 0.4
+                        Label:
+                            text: 'Fecha:'
+                            size_hint_x: 0.1
+                            color: 1, 1, 1, 1
+                        TextInput:
+                            id: nueva_fecha
+                            text: ''  # Se llenará desde Python con la fecha actual
+                            readonly: True
+                            size_hint_x: 0.1
+
+                    BoxLayout:
+                        orientation: 'horizontal'
+                        size_hint_y: None
+                        height: 30
+                        spacing: 10
+                        Label:
+                            text: 'TELEFONO:'
+                            size_hint_x: 0.1
+                            color: 1, 1, 1, 1
+                        TextInput:
+                            id: nuevo_telefono
+                            size_hint_x: 0.2
+                        Label:
+                            text: 'DIRECCIÓN:'
+                            size_hint_x: 0.1
+                            color: 1, 1, 1, 1
+                        TextInput:
+                            id: nueva_direccion
+                            size_hint_x: 0.4
+                        Button:
+                            text: 'Guardar Nuevo Cliente'
+                            size_hint_x: 0.2
+                            on_release: root.guardar_nuevo_cliente()
+
+
+                    # Mano de Obra a Asignar al Trabajo
+                    LabelOscuro:
+                        text: 'MOTOR'
+                        size_hint_y: None
+                        height: '30sp'
+                        font_size: 20
+                        bold: True
+
+
+
+                    BoxLayout:
+                        orientation: 'horizontal'
+                        size_hint_y: None
+                        height: 30
+                        spacing: 10
+                        Label:
+                            text: 'Motor a:'
+                            size_hint_x: 0.05
+                            color: 1, 1, 1, 1
+                        Spinner:
+                            id: tipo_motor
+                            text: 'Seleccionar'
+                            values: ['Gasolina', 'Diésel', 'Gasoil']
+                            size_hint_x: 0.1
+
+                        Label:
+                            text: 'Marca:'
+                            size_hint_x: 0.05
+                            color: 1, 1, 1, 1
+
+                        TextInput:
+                            id: marca
+                            hint_text: 'Marca del Motor'
+                            size_hint_x: 0.15
+                            height: 30
+                            size_hint_y: None
+                            multiline: False
+
+                        Label:
+                            text: 'Modelo:'
+                            size_hint_x: 0.05
+                            color: 1, 1, 1, 1
+
+                        TextInput:
+                            id: motor
+                            hint_text: 'Escribe para buscar modelo...'
+                            size_hint_x: 0.15
+                            height: 30
+                            size_hint_y: None
+                            multiline: False
+
+                        Label:
+                            text: 'CL:'
+                            size_hint_x: 0.05
+                            color: 1, 1, 1, 1
+
+                        TextInput:
+                            id: Cilindraje
+                            hint_text: ''
+                            size_hint_x: 0.1
+                            multiline: False
+
+
+                        Label:
+                            text: 'SERIAL DE MOTOR:'
+                            size_hint_x: 0.1
+                            color: 1, 1, 1, 1
+                        TextInput:
+                            id: serial_motor
+                            size_hint_x: 0.15
+
+                    # Partes Recibidas
+
+                    BoxLayout: 
+                        orientation: 'horizontal'
+                       
+                        size_hint_y: None
+                        height: 30
+                        spacing: 10
+                        LabelOscuro:
+                            text: ' PARTES RECIBIDAS'
+                            size_hint_y: None
+                            height: '30sp'
+                            font_size: 20
+                            size_hint_x: 0.88
+                            bold: True
+                        Button:
+                            id: mas_partes
+                            text: '+'
+                            size_hint_x: 0.04
+                            background_color: 0.2, 0.7, 0.2, 1
+                            on_release: root.agregar_fila_partes_recibidas()
+                        Button:
+                            id: mas_observacion
+                            text: '!'
+                            size_hint_x: 0.04
+                            background_color: 0.2, 0.2, 0.7, 1
+                            on_release: root.agregar_observacion_partes_recibidas() 
+                        Button:
+                            id: menos_partes
+                            text: '-'
+                            size_hint_x: 0.04
+                            background_color: 0.7, 0.2, 0.2, 1
+                            on_release: root.eliminar_ultima_fila_partes_recibidas()
+                        
+                    
+
+                    GridLayout:
+                        id: grid_partes_recibidas
+                        cols: 12
+                        size_hint_y: None
+                        height: self.minimum_height
+                        row_default_height: 30
+                        padding: 10
+                        spacing: 10
+
+                        # Encabezados
+                        Label:
+                            text: 'CANT'
+                            color: 1, 1, 1, 1
+                        Label:
+                            text: 'Partes Recibidas'
+                            color: 1, 1, 1, 1
+                        Label:
+                            text: 'CANT'
+                            color: 1, 1, 1, 1
+                        Label:
+                            text: 'Partes Recibidas'
+                            color: 1, 1, 1, 1
+                        Label:
+                            text: 'CANT'
+                            color: 1, 1, 1, 1
+                        Label:
+                            text: 'Partes Recibidas'
+                            color: 1, 1, 1, 1
+                        Label:
+                            text: 'CANT'
+                            color: 1, 1, 1, 1
+                        Label:
+                            text: 'Partes Recibidas'
+                            color: 1, 1, 1, 1
+                        Label:
+                            text: 'CANT'
+                            color: 1, 1, 1, 1
+                        Label:
+                            text: 'Partes Recibidas'
+                            color: 1, 1, 1, 1
+                        Label:
+                            text: 'CANT'
+                            color: 1, 1, 1, 1
+                        Label:
+                            text: 'Partes Recibidas'
+                            color: 1, 1, 1, 1
+
+                        # Fila 1
+                        TextInput:
+                            id: cantidad_grid_1
+                            input_filter: 'float'
+                        Label:
+                            id: ciguenal
+                            text: 'Cigueñal'
+                            color: 1, 1, 1, 1
+                        TextInput:
+                            id: cantidad_grid_2
+                            input_filter: 'float'
+                        Label:
+                            id: bujias
+                            text: 'Bujias'
+                            color: 1, 1, 1, 1
+                        TextInput:
+                            id: cantidad_grid_3
+                            input_filter: 'float'
+                        Label:
+                            id: polea
+                            text: 'Polea'
+                            color: 1, 1, 1, 1
+                        TextInput:
+                            id: cantidad_grid_4
+                            input_filter: 'float'
+                        Label:
+                            id: Multiple
+                            text: 'multiple'
+                            color: 1, 1, 1, 1
+                        TextInput:
+                            id: cantidad_grid_5
+                            input_filter: 'float'
+                        Label:
+                            id: bloque
+                            text: 'Bloque'
+                            color: 1, 1, 1, 1
+                        TextInput:
+                            id: cantidad_grid_6
+                            input_filter: 'float'
+                        Label:
+                            id: bodis
+                            text: 'Bodis'
+                            color: 1, 1, 1, 1
+
+                        #Fila 2
+
+                        TextInput:
+                            id: cantidad_grid_7
+                            input_filter: 'float'
+                        Label:
+                            id: volante
+                            text: 'Volante'
+                            color: 1, 1, 1, 1
+                        TextInput:
+                            id: cantidad_grid_8
+                            input_filter: 'float'
+                        Label:
+                            id: Carter
+                            text: 'carter'
+                            color: 1, 1, 1, 1
+                        TextInput:
+                            id: cantidad_grid_9
+                            input_filter: 'float'
+                        Label:
+                            id: tapas_de_bancada
+                            text: 'Tapas de Bancada'
+                            color: 1, 1, 1, 1
+                        TextInput:
+                            id: cantidad_grid_10
+                            input_filter: 'float'
+                        Label:
+                            id: puntas
+                            text: 'puntas'
+                            color: 1, 1, 1, 1
+                        TextInput:
+                            id: cantidad_grid_11
+                            input_filter: 'float'
+                        Label:
+                            id: engranajes
+                            text: 'Engranajes'
+                            color: 1, 1, 1, 1
+                        TextInput:
+                            id: cantidad_grid_12
+                            input_filter: 'float'
+                        Label:
+                            id: camisas
+                            text: 'Camisas'
+                            color: 1, 1, 1, 1
+
+                        #Fila 3
+
+                        TextInput:
+                            id: cantidad_grid_13
+                            input_filter: 'float'
+                        Label:
+                            id: arbol_de_leva
+                            text: 'Árbol de Leva'
+                            color: 1, 1, 1, 1
+                        TextInput:
+                            id: cantidad_grid_14
+                            input_filter: 'float'
+                        Label:
+                            id: esparragos
+                            text: 'Esparragos'
+                            color: 1, 1, 1, 1
+                        TextInput:
+                            id: cantidad_grid_15
+                            input_filter: 'float'
+                        Label:
+                            id: balancines
+                            text: 'Balancines'
+                            color: 1, 1, 1, 1
+                        TextInput:
+                            id: cantidad_grid_16
+                            input_filter: 'float'
+                        Label:
+                            id: camaras
+                            text: 'Cámaras'
+                            color: 1, 1, 1, 1
+                        TextInput:
+                            id: cantidad_grid_17
+                            input_filter: 'float'
+                        Label:
+                            id: tapa_valvulas
+                            text: 'Tapa Válvulas'
+                            color: 1, 1, 1, 1
+                        TextInput:
+                            id: cantidad_grid_18
+                            input_filter: 'float'
+                        Label:
+                            id: toma_de_agua
+                            text: 'Toma de agua'
+                            color: 1, 1, 1, 1
+
+
+                        #Fila 4
+
+                        TextInput:
+                            id: cantidad_grid_19
+                            input_filter: 'float'
+                        Label:
+                            id: valvulas_adm
+                            text: 'Válvulas Adm'
+                            color: 1, 1, 1, 1
+                        TextInput:
+                            id: cantidad_grid_20
+                            input_filter: 'float'
+                        Label:
+                            id: bielas
+                            text: 'Bielas'
+                            color: 1, 1, 1, 1
+                        TextInput:
+                            id: cantidad_grid_21
+                            input_filter: 'float'
+                        Label:
+                            id: chambers
+                            text: 'Chambers'
+                            color: 1, 1, 1, 1
+                        TextInput:
+                            id: cantidad_grid_22
+                            input_filter: 'float'
+                        Label:
+                            id: valvulas_esc
+                            text: 'Válvulas Esc.'
+                            color: 1, 1, 1, 1
+                        TextInput:
+                            id: cantidad_grid_23
+                            input_filter: 'float'
+                        Label:
+                            id: tapas_de_vielas
+                            text: 'Tapas de Bielas'
+                            color: 1, 1, 1, 1
+                        TextInput:
+                            id: cantidad_grid_24
+                            input_filter: 'float'
+                        Label:
+                            id: bomba_de_aceite
+                            text: 'Bomba de Aceite'
+                            color: 1, 1, 1, 1
+
+                    #Fila 5
+
+                        TextInput:
+                            id: cantidad_grid_25
+                            input_filter: 'float'
+                        Label:
+                            id: resortes
+                            text: 'Resortes'
+                            color: 1, 1, 1, 1
+                        TextInput:
+                            id: cantidad_grid_26
+                            input_filter: 'float'
+                        Label:
+                            id: camarin
+                            text: 'camarin'
+                            color: 1, 1, 1, 1
+                        TextInput:
+                            id: cantidad_grid_27
+                            input_filter: 'float'
+                        Label:
+                            id: toma_de_agua2
+                            text: 'Toma de Agua'
+                            color: 1, 1, 1, 1
+                        TextInput:
+                            id: cantidad_grid_28
+                            input_filter: 'float'
+                        Label:
+                            id: cuñadas
+                            text: 'Cuñadas'
+                            color: 1, 1, 1, 1
+                        TextInput:
+                            id: cantidad_grid_29
+                            input_filter: 'float'
+                        Label:
+                            id: pasador
+                            text: 'Pasador'
+                            color: 1, 1, 1, 1
+                        TextInput:
+                            id: cantidad_grid_30
+                            input_filter: 'float'
+                        Label:
+                            id: base_de_agua
+                            text: 'Base de Agua'
+                            color: 1, 1, 1, 1
+
+
+
+                    # Mano de Obra
+                    BoxLayout: 
+                        orientation: 'horizontal'
+                       
+                        size_hint_y: None
+                        height: 30
+                        spacing: 10
+                        LabelOscuro:
+                            text: 'MANO DE OBRA'
+                            size_hint_y: None
+                            height: '30sp'
+                            font_size: 20
+                            size_hint_x: 0.88
+                            bold: True
+
+                        Button:
+                            text: 'Añadir Operador'
+                            id: popup_operadores
+                            size_hint_x: 0.12
+                            background_color: 0.2, 0.2, 0.7, 1
+                            on_release: root.abrir_popup_operadores()
+
+
+
+                    BoxLayout:
+                        id: grid_mano_obra
+                        orientation: 'vertical'
+                        size_hint_y: None
+                        height: self.minimum_height
+                        padding: 10
+                        spacing: 15
+
+
+
+                    #BoxLayout:
+                      #  id: grid_repuestos
+                       # orientation: 'vertical'
+                        #size_hint_y: None
+                        #height: self.minimum_height
+                        #padding: 10
+                        #spacing: 15
+
+
+                    # Botones finales
+                    BoxLayout:
+                        orientation: 'horizontal'
+                        size_hint_y: None
+                        height: 50
+                        spacing: 10
+                        Button:
+                            text: 'Guardar'
+                            on_release: root.guardar_nueva_ficha()
+                        Button:
+                            text: 'Cancelar'
+                            on_release: root.dismiss()
+                        Button:
+                            id: generador_ficha
+                            text: 'Generar Ficha'
+                            on_release: root.generar_ficha_pdf()
+
+
+        # ✅ PARTE DERECHA (10% - Panel de totales)
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint_x: 0.1  # ← 10% del ancho
+            size_hint_y: 1.0  # ← Asegurar que ocupe toda la altura
+            padding: [10, 0, 0, 0]
+            spacing: 5
+            canvas.before:
+                Color:
+                    rgba: 0.1, 0.1, 0.1, 0.9
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+            # Título del panel
+            Label:
+                text: 'TOTALES'
+                size_hint_y: None
+                height: 40
+                font_size: 14
+                bold: True
+                color: 1, 1, 1, 1
+            ScrollView:
+                BoxLayout:
+                    orientation: 'vertical'
+                    size_hint_y: None
+                    height: self.minimum_height
+                    spacing: 8
+                    # Total Mano de Obra
+                    BoxLayout:
+                        orientation: 'vertical'
+                        size_hint_y: None
+                        height: 60
+                        canvas.before:
+                            Color:
+                                rgba: 0.2, 0.4, 0.2, 0.8
+                            Rectangle:
+                                pos: self.pos
+                                size: self.size
+                        Label:
+                            text: 'MANO DE OBRA'
+                            font_size: 10
+                            bold: True
+                            color: 1, 1, 1, 1
+                            size_hint_y: 0.4
+                        Label:
+                            id: total_mano_obra
+                            text: '$0.00'
+                            font_size: 12
+                            bold: True
+                            color: 0, 1, 0, 1
+                            size_hint_y: 0.6
+                    # Total Repuestos
+                    BoxLayout:
+                        orientation: 'vertical'
+                        size_hint_y: None
+                        height: 60
+                        canvas.before:
+                            Color:
+                                rgba: 0.2, 0.2, 0.4, 0.8
+                            Rectangle:
+                                pos: self.pos
+                                size: self.size
+                        Label:
+                            text: 'REPUESTOS'
+                            font_size: 10
+                            bold: True
+                            color: 1, 1, 1, 1
+                            size_hint_y: 0.4
+                        Label:
+                            id: total_repuestos
+                            text: '$0.00'
+                            font_size: 12
+                            bold: True
+                            color: 0, 1, 0, 1
+                            size_hint_y: 0.6
+                    # Subtotal
+                    BoxLayout:
+                        orientation: 'vertical'
+                        size_hint_y: None
+                        height: 60
+                        canvas.before:
+                            Color:
+                                rgba: 0.4, 0.4, 0.2, 0.9
+                            Rectangle:
+                                pos: self.pos
+                                size: self.size
+                        Label:
+                            text: 'SUBTOTAL'
+                            font_size: 10
+                            bold: True
+                            color: 1, 1, 1, 1
+                            size_hint_y: 0.4
+                        Label:
+                            id: subtotal
+                            text: '$0.00'
+                            font_size: 14
+                            bold: True
+                            color: 1, 1, 0, 1
+                            size_hint_y: 0.6
+                    # IVA (16%)
+                    BoxLayout:
+                        orientation: 'vertical'
+                        size_hint_y: None
+                        height: 60
+                        canvas.before:
+                            Color:
+                                rgba: 0.4, 0.2, 0.2, 0.8
+                            Rectangle:
+                                pos: self.pos
+                                size: self.size
+                        Label:
+                            text: 'I.V.A (16%)'
+                            font_size: 10
+                            bold: True
+                            color: 1, 1, 1, 1
+                            size_hint_y: 0.4
+                        Label:
+                            id: iva
+                            text: '$0.00'
+                            font_size: 12
+                            bold: True
+                            color: 1, 0.5, 0, 1
+                            size_hint_y: 0.6
+                    # ✅ NUEVO BLOQUE TOTAL (Subtotal + IVA)
+                    BoxLayout:
+                        orientation: 'vertical'
+                        size_hint_y: None
+                        height: 70
+                        canvas.before:
+                            Color:
+                                rgba: 0.5, 0.3, 0.5, 0.9
+                            Rectangle:
+                                pos: self.pos
+                                size: self.size
+                        Label:
+                            text: 'TOTAL'
+                            font_size: 12
+                            bold: True
+                            color: 1, 1, 1, 1
+                            size_hint_y: 0.3
+                        Label:
+                            id: total_general
+                            text: '$0.00'
+                            font_size: 16
+                            bold: True
+                            color: 1, 1, 1, 1
+                            size_hint_y: 0.7
+                    # Anticipo
+                    BoxLayout:
+                        orientation: 'vertical'
+                        size_hint_y: None
+                        height: 70
+                        canvas.before:
+                            Color:
+                                rgba: 0.2, 0.3, 0.4, 0.8
+                            Rectangle:
+                                pos: self.pos
+                                size: self.size
+                        Label:
+                            text: 'ANTICIPO'
+                            font_size: 9
+                            bold: True
+                            color: 1, 1, 1, 1
+                            size_hint_y: 0.3
+                        TextInput:
+                            id: anticipo
+                            text: '0.00'
+                            input_filter: 'float'
+                            multiline: False
+                            font_size: 10
+                            size_hint_y: 0.7
+
+                    # Abonos
+                    BoxLayout:
+                        orientation: 'vertical'
+                        size_hint_y: None
+                        height: 70
+                        canvas.before:
+                            Color:
+                                rgba: 0.2, 0.3, 0.4, 0.8
+                            Rectangle:
+                                pos: self.pos
+                                size: self.size
+                        Label:
+                            text: 'ABONOS'
+                            font_size: 9
+                            bold: True
+                            color: 1, 1, 1, 1
+                            size_hint_y: 0.3
+                        TextInput:
+                            id: abonos
+                            text: '0.00'
+                            input_filter: 'float'
+                            multiline: False
+                            font_size: 10
+                            size_hint_y: 0.7
+                    # Saldo
+                    BoxLayout:
+                        orientation: 'vertical'
+                        size_hint_y: None
+                        height: 70
+                        canvas.before:
+                            Color:
+                                rgba: 0.4, 0.2, 0.4, 0.8
+                            Rectangle:
+                                pos: self.pos
+                                size: self.size
+                        Label:
+                            text: 'SALDO'
+                            font_size: 10
+                            bold: True
+                            color: 1, 1, 1, 1
+                            size_hint_y: 0.3
+                        Label:
+                            id: saldo
+                            text: '$0.00'
+                            font_size: 14
+                            bold: True
+                            color: 1, 0, 0, 1
+                            size_hint_y: 0.7
+
+
+                    BoxLayout:
+                        orientation: 'horizontal'
+                        size_hint_y: None
+                        height: 50
+                        spacing: 10
+                        
+                        Button:
+                            text: 'Nota de Entrega'
+                            id: nota_entrega
+                            size_hint_x: 0.5
+                            on_release: root.generar_nota_entrega()
+                        
+
+                    
+<FichaTorno>:
+    size_hint: .9, .95
+    auto_dismiss: False
+    title: ''  # ← Muy importante: deja vacío para que Python lo controle
+    BoxLayout:
+        orientation: 'horizontal'  # ← Cambiado a horizontal para dividir en 2 partes
+        padding: 20
+        spacing: 10
+        # ✅ PARTE IZQUIERDA (90% - Contenido principal)
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint_x: 0.9  # ← 90% del ancho
+            size_hint_y: 1.0  # ← Asegurar que ocupe toda la altura
+            padding: 0
+            spacing: 10
+            # Mensaje de estado
+            Label:
+                id: mensaje_estado
+                size_hint_y: None
+                height: 30
+                text: ''
+                color: 1, 1, 1, 1
+            
+            
+            ScrollView:
+                BoxLayout:
+                    orientation: 'vertical'
+                    size_hint_y: None
+                    height: self.minimum_height
+                    spacing: 10
+
+                    # Información del Cliente
+                    BoxLayout: 
+                        orientation: 'horizontal'
+                       
+                        size_hint_y: None
+                        height: 30
+                        spacing: 10
+                        LabelOscuro:
+                            text: 'DATOS DEL CLIENTE'
+                            size_hint_y: None
+                            height: '30sp'
+                            font_size: 20
+                            size_hint_x: 0.88
+                            bold: True
+
+                        Button:
+                            id: mas_observacion
+                            text: 'Buscar Cliente'
+                            size_hint_x: 0.12
+                            background_color: 0.2, 0.2, 0.7, 1
+                            on_release: root.abrir_popup_clientes() 
+
+
+
+                    BoxLayout:
+                        orientation: 'horizontal'
+                        size_hint_y: None
+                        height: 30
+                        spacing: 10
+                        Label:
+                            text: 'RIF:'
+                            size_hint_x: 0.1
+                            color: 1, 1, 1, 1
+
+                        Spinner:
+                            id: tipo_rif
+                            text: 'V-'
+                            values: ['V-', 'E-', 'P-', 'J-', 'G-', 'R-']
+                            size_hint_x: 0.05
+                        TextInput:
+                            id: nuevo_rif
+                            size_hint_x: 0.2
+                        Label:
+                            text: 'CLIENTE:'
+                            size_hint_x: 0.05
+                            color: 1, 1, 1, 1
+                        TextInput:
+                            id: nuevo_cliente
+                            size_hint_x: 0.4
+                        Label:
+                            text: 'Fecha:'
+                            size_hint_x: 0.1
+                            color: 1, 1, 1, 1
+                        TextInput:
+                            id: nueva_fecha
+                            text: ''  # Se llenará desde Python con la fecha actual
+                            readonly: True
+                            size_hint_x: 0.1
+
+                    BoxLayout:
+                        orientation: 'horizontal'
+                        size_hint_y: None
+                        height: 30
+                        spacing: 10
+                        Label:
+                            text: 'TELEFONO:'
+                            size_hint_x: 0.1
+                            color: 1, 1, 1, 1
+                        TextInput:
+                            id: nuevo_telefono
+                            size_hint_x: 0.2
+                        Label:
+                            text: 'DIRECCIÓN:'
+                            size_hint_x: 0.1
+                            color: 1, 1, 1, 1
+                        TextInput:
+                            id: nueva_direccion
+                            size_hint_x: 0.4
+                        Button:
+                            text: 'Guardar Nuevo Cliente'
+                            size_hint_x: 0.2
+                            on_release: root.guardar_nuevo_cliente()
+
+
+
+                    # Partes Recibidas
+
+                    BoxLayout: 
+                        orientation: 'horizontal'
+                       
+                        size_hint_y: None
+                        height: 30
+                        spacing: 10
+                        LabelOscuro:
+                            text: ' PARTES RECIBIDAS'
+                            size_hint_y: None
+                            height: '30sp'
+                            font_size: 20
+                            size_hint_x: 0.88
+                            bold: True
+                        Button:
+                            id: mas_partes
+                            text: '+'
+                            size_hint_x: 0.04
+                            background_color: 0.2, 0.7, 0.2, 1
+                            on_release: root.agregar_fila_partes_recibidas()
+                        Button:
+                            id: mas_observacion
+                            text: '!'
+                            size_hint_x: 0.04
+                            background_color: 0.2, 0.2, 0.7, 1
+                            on_release: root.agregar_observacion_partes_recibidas() 
+                        Button:
+                            id: menos_partes
+                            text: '-'
+                            size_hint_x: 0.04
+                            background_color: 0.7, 0.2, 0.2, 1
+                            on_release: root.eliminar_ultima_fila_partes_recibidas()
+                        
+                    
+                        
+                    
+
+                    GridLayout:
+                        id: grid_partes_recibidas
+                        cols: 3
+                        size_hint_y: None
+                        height: self.minimum_height
+                        row_default_height: 30
+                        padding: 10
+                        spacing: 10
+
+                        # Encabezados
+                        Label:
+                            size_hint_x: 0.85
+                            text: 'Partes Recibidas'
+                            color: 1, 1, 1, 1
+                        Label:
+                            size_hint_x: 0.10
+                            text: 'CANT'
+                            color: 1, 1, 1, 1
+                        Label:
+                            size_hint_x: 0.05
+                            text: 'Borrar'
+                            color: 1, 1, 1, 1
+
+
+
+                    # Mano de Obra
+                    BoxLayout: 
+                        orientation: 'horizontal'
+                       
+                        size_hint_y: None
+                        height: 30
+                        spacing: 10
+                        LabelOscuro:
+                            text: 'MANO DE OBRA'
+                            size_hint_y: None
+                            height: '30sp'
+                            font_size: 20
+                            size_hint_x: 0.88
+                            bold: True
+
+                        Button:
+                            text: 'Añadir Operador'
+                            id: popup_operadores
+                            size_hint_x: 0.12
+                            background_color: 0.2, 0.2, 0.7, 1
+                            on_release: root.abrir_popup_operadores()
+
+
+
+
+                    BoxLayout:
+                        id: grid_mano_obra
+                        orientation: 'vertical'
+                        size_hint_y: None
+                        height: self.minimum_height
+                        padding: 10
+                        spacing: 15
+
+
+
+                    #BoxLayout:
+                      #  id: grid_repuestos
+                       # orientation: 'vertical'
+                        #size_hint_y: None
+                        #height: self.minimum_height
+                        #padding: 10
+                        #spacing: 15
+
+
+                    # Botones finales
+                    BoxLayout:
+                        orientation: 'horizontal'
+                        size_hint_y: None
+                        height: 50
+                        spacing: 10
+                        Button:
+                            text: 'Guardar'
+                            on_release: root.guardar_nueva_ficha()
+                        Button:
+                            text: 'Cancelar'
+                            on_release: root.dismiss()
+                        Button:
+                            id: generador_ficha
+                            text: 'Generar Ficha'
+                            on_release: root.generar_ficha_pdf()
+
+
+        # ✅ PARTE DERECHA (10% - Panel de totales)
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint_x: 0.1  # ← 10% del ancho
+            size_hint_y: 1.0  # ← Asegurar que ocupe toda la altura
+            padding: [10, 0, 0, 0]
+            spacing: 5
+            canvas.before:
+                Color:
+                    rgba: 0.1, 0.1, 0.1, 0.9
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+            # Título del panel
+            Label:
+                text: 'TOTALES'
+                size_hint_y: None
+                height: 40
+                font_size: 14
+                bold: True
+                color: 1, 1, 1, 1
+            ScrollView:
+                BoxLayout:
+                    orientation: 'vertical'
+                    size_hint_y: None
+                    height: self.minimum_height
+                    spacing: 8
+                    # Total Mano de Obra
+                    BoxLayout:
+                        orientation: 'vertical'
+                        size_hint_y: None
+                        height: 60
+                        canvas.before:
+                            Color:
+                                rgba: 0.2, 0.4, 0.2, 0.8
+                            Rectangle:
+                                pos: self.pos
+                                size: self.size
+                        Label:
+                            text: 'MANO DE OBRA'
+                            font_size: 10
+                            bold: True
+                            color: 1, 1, 1, 1
+                            size_hint_y: 0.4
+                        Label:
+                            id: total_mano_obra
+                            text: '$0.00'
+                            font_size: 12
+                            bold: True
+                            color: 0, 1, 0, 1
+                            size_hint_y: 0.6
+                    # Total Repuestos
+                    BoxLayout:
+                        orientation: 'vertical'
+                        size_hint_y: None
+                        height: 60
+                        canvas.before:
+                            Color:
+                                rgba: 0.2, 0.2, 0.4, 0.8
+                            Rectangle:
+                                pos: self.pos
+                                size: self.size
+                        Label:
+                            text: 'REPUESTOS'
+                            font_size: 10
+                            bold: True
+                            color: 1, 1, 1, 1
+                            size_hint_y: 0.4
+                        Label:
+                            id: total_repuestos
+                            text: '$0.00'
+                            font_size: 12
+                            bold: True
+                            color: 0, 1, 0, 1
+                            size_hint_y: 0.6
+                    # Subtotal
+                    BoxLayout:
+                        orientation: 'vertical'
+                        size_hint_y: None
+                        height: 60
+                        canvas.before:
+                            Color:
+                                rgba: 0.4, 0.4, 0.2, 0.9
+                            Rectangle:
+                                pos: self.pos
+                                size: self.size
+                        Label:
+                            text: 'SUBTOTAL'
+                            font_size: 10
+                            bold: True
+                            color: 1, 1, 1, 1
+                            size_hint_y: 0.4
+                        Label:
+                            id: subtotal
+                            text: '$0.00'
+                            font_size: 14
+                            bold: True
+                            color: 1, 1, 0, 1
+                            size_hint_y: 0.6
+                    # IVA (16%)
+                    BoxLayout:
+                        orientation: 'vertical'
+                        size_hint_y: None
+                        height: 60
+                        canvas.before:
+                            Color:
+                                rgba: 0.4, 0.2, 0.2, 0.8
+                            Rectangle:
+                                pos: self.pos
+                                size: self.size
+                        Label:
+                            text: 'I.V.A (16%)'
+                            font_size: 10
+                            bold: True
+                            color: 1, 1, 1, 1
+                            size_hint_y: 0.4
+                        Label:
+                            id: iva
+                            text: '$0.00'
+                            font_size: 12
+                            bold: True
+                            color: 1, 0.5, 0, 1
+                            size_hint_y: 0.6
+                    # ✅ NUEVO BLOQUE TOTAL (Subtotal + IVA)
+                    BoxLayout:
+                        orientation: 'vertical'
+                        size_hint_y: None
+                        height: 70
+                        canvas.before:
+                            Color:
+                                rgba: 0.5, 0.3, 0.5, 0.9
+                            Rectangle:
+                                pos: self.pos
+                                size: self.size
+                        Label:
+                            text: 'TOTAL'
+                            font_size: 12
+                            bold: True
+                            color: 1, 1, 1, 1
+                            size_hint_y: 0.3
+                        Label:
+                            id: total_general
+                            text: '$0.00'
+                            font_size: 16
+                            bold: True
+                            color: 1, 1, 1, 1
+                            size_hint_y: 0.7
+                    # Anticipo
+                    BoxLayout:
+                        orientation: 'vertical'
+                        size_hint_y: None
+                        height: 70
+                        canvas.before:
+                            Color:
+                                rgba: 0.2, 0.3, 0.4, 0.8
+                            Rectangle:
+                                pos: self.pos
+                                size: self.size
+                        Label:
+                            text: 'ANTICIPO'
+                            font_size: 9
+                            bold: True
+                            color: 1, 1, 1, 1
+                            size_hint_y: 0.3
+                        TextInput:
+                            id: anticipo
+                            text: '0.00'
+                            input_filter: 'float'
+                            multiline: False
+                            font_size: 10
+                            size_hint_y: 0.7
+
+                    # Abonos
+                    BoxLayout:
+                        orientation: 'vertical'
+                        size_hint_y: None
+                        height: 70
+                        canvas.before:
+                            Color:
+                                rgba: 0.2, 0.3, 0.4, 0.8
+                            Rectangle:
+                                pos: self.pos
+                                size: self.size
+                        Label:
+                            text: 'ABONOS'
+                            font_size: 9
+                            bold: True
+                            color: 1, 1, 1, 1
+                            size_hint_y: 0.3
+                        TextInput:
+                            id: abonos
+                            text: '0.00'
+                            input_filter: 'float'
+                            multiline: False
+                            font_size: 10
+                            size_hint_y: 0.7
+                    # Saldo
+                    BoxLayout:
+                        orientation: 'vertical'
+                        size_hint_y: None
+                        height: 70
+                        canvas.before:
+                            Color:
+                                rgba: 0.4, 0.2, 0.4, 0.8
+                            Rectangle:
+                                pos: self.pos
+                                size: self.size
+                        Label:
+                            text: 'SALDO'
+                            font_size: 10
+                            bold: True
+                            color: 1, 1, 1, 1
+                            size_hint_y: 0.3
+                        Label:
+                            id: saldo
+                            text: '$0.00'
+                            font_size: 14
+                            bold: True
+                            color: 1, 0, 0, 1
+                            size_hint_y: 0.7
+
+                    BoxLayout:
+                        orientation: 'horizontal'
+                        size_hint_y: None
+                        height: 50
+                        spacing: 10
+                        
+                        Button:
+                            text: 'Nota de Entrega'
+                            id: nota_entrega
+                            size_hint_x: 0.5
+                            on_release: root.generar_nota_entrega()
+
+                
+<VistaUsers>:
+
+    name: 'users'  # ← Nombre de la pantalla en el ScreenManager
+    BoxLayout:
+        orientation: 'vertical'
+
+        # Título
+        BoxLayout:
+            size_hint_y: None
+            height: 40
+            padding: 5
+            LabelOscuro:
+                text: 'GESTIÓN DE USUARIOS'
+                font_size: '18sp'
+                bold: True
+                halign: 'center'
+                valign: 'middle'
+                size_hint_x: 1
+
+        # Barra de búsqueda (opcional)
+        BoxLayout:
+            size_hint_y: None
+            height: 40
+            spacing: 10
+            padding: 0
+            Label:
+                text: 'Buscar:'
+                size_hint_x: None
+                width: 80
+                color: (0, 0, 0, 1)
+            TextInput:
+                id: filtro_usuario
+                hint_text: 'Buscar por nombre o username'
+                multiline: False
+                on_text: root.filtrar_usuarios(self.text)  # Asegúrate de tener este método en la clase
+
+        BoxLayout:
+            # Tabla de usuarios
+            BoxLayout:
+                padding: .5
+                orientation: 'vertical'
+
+                # Encabezados
+                BoxLayout:
+                    size_hint_y: None
+                    height: 30
+                    spacing: .5
+                    LabelOscuro:
+                        text: '#'
+                        size_hint_x: .1
+                    LabelOscuro:
+                        text: 'Nombre'
+                        size_hint_x: .3
+                    LabelOscuro:
+                        text: 'Username'
+                        size_hint_x: .3
+                    LabelOscuro:
+                        text: 'Contraseña'
+                        size_hint_x: .3
+
+                # Lista de usuarios (usando RecycleView o tu AdminRV personalizado)
+
+
+                BoxLayout:
+                    size_hint_y: .89
+                    canvas.before:
+                        Color:
+                            rgba: 1, 1, 1, 0.5  
+                        Rectangle:
+                            source: 'Logo_inrema_blanco2.png'
+                            size: self.width * 0.4, self.height * 0.4
+                            pos: self.center_x - self.width * 0.2, self.center_y - self.height * 0.2
+
+                        # Lista de fichas
+                    AdminRV:
+                        id: rv_usuarios
+                        size_hint_y: .89
+                        viewclass: 'SelectableUsersLabel' 
+
+    
+
+            # Botones laterales
+            BoxLayout:
+                spacing: .5
+                size_hint_x: .2
+                orientation: 'vertical'
+                padding: .5
+
+                BotonOscuro:
+                    text: 'Agregar Usuario'
+                    on_release: root.agregar_usuario()
+
+                BotonOscuro:
+                    text: 'Modificar Usuario'
+                    on_release: root.modificar_usuario()
+
+                BotonOscuro:
+                    text: 'Eliminar Usuario'
+                    background_color: (0.9, 0.3, 0.3, 1)
+                    on_release: root.eliminar_usuario()
+
+
+<SelectableUsersLabel>:
+    # Draw a background to indicate selection
+    canvas.before:
+        Color:
+            rgba: hex('#C9F3EF') if self.selected else hex('#f0f0f093')
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    BoxLayout:
+        size_hint_y: None
+        height: 40
+        spacing: 10
+        padding: 5
+
+        Label:
+            id: _hashtag
+            size_hint_x: 0.1
+            text: ''
+            halign: 'center'
+            valign: 'middle'
+            text_size: self.size
+        	color: (0,0,0,1)
+        Label:
+            id: _nombre
+            size_hint_x: 0.3
+            color: (0,0,0,1)
+        Label:
+            id: _username
+            size_hint_x: 0.3
+            color: (0,0,0,1)
+        Label:
+            id: _contraseña
+            size_hint_x: 0.3
+            color: (0,0,0,1)
+
+
+<UsuarioPopup>:
+    size_hint: .5, .5
+    auto_dismiss: False
+    title: ''
+    BoxLayout:
+        orientation: 'vertical'
+        padding: .05
+
+        Label:
+            size_hint_y: .1
+            id: usuario_info_1
+
+        Label:
+            id: no_valid_notif
+            size_hint_y: .1
+
+        TextInput: 
+            size_hint_y: .2
+            id: usuario_username
+            multiline: False
+            hint_text: 'Username'
+            write_tab: False
+
+        TextInput: 
+            id: usuario_nombre
+            size_hint_y: .2
+            multiline: False
+            hint_text: 'Nombre'
+            write_tab: False
+
+        BoxLayout:
+            size_hint_y: .2
+            TextInput:
+                size_hint_x: .5
+                id: usuario_password
+                multiline: False
+                hint_text: 'Password'
+                password: True
+                write_tab: False
+
+        # --- NUEVO: RadioButtons para Nivel de Acceso ---
+        BoxLayout:
+            size_hint_y: .2
+            orientation: 'horizontal'
+            spacing: 10
+            padding: [10, 0, 10, 0]
+            Label:
+                text: "Nivel de Acceso:"
+                size_hint_x: 0.4
+                color: (1, 1, 1, 1)
+                halign: 'right'
+                valign: 'middle'
+
+            # RadioButton para Nivel 1
+            BoxLayout:
+                orientation: 'horizontal'
+                size_hint_x: 0.2
+                CheckBox:
+                    id: radio_nivel_1
+                    group: 'nivel_acceso'
+                    on_active: root.on_radio_change('1')
+                Label:
+                    text: "1"
+                    size_hint_x: None
+                    width: 20
+                    color: (1, 1, 1, 1)
+
+            # RadioButton para Nivel 2
+            BoxLayout:
+                orientation: 'horizontal'
+                size_hint_x: 0.2
+                CheckBox:
+                    id: radio_nivel_2
+                    group: 'nivel_acceso'
+                    on_active: root.on_radio_change('2')
+                Label:
+                    text: "2"
+                    size_hint_x: None
+                    width: 20
+                    color: (1, 1, 1, 1)
+
+            # RadioButton para Nivel 3
+            BoxLayout:
+                orientation: 'horizontal'
+                size_hint_x: 0.2
+                CheckBox:
+                    id: radio_nivel_3
+                    group: 'nivel_acceso'
+                    on_active: root.on_radio_change('3')
+                Label:
+                    text: "3"
+                    size_hint_x: None
+                    width: 20
+                    color: (1, 1, 1, 1)
+
+        # Botones
+        BoxLayout:
+            size_hint_y: .2
+            Button:
+                text: 'Aceptar'
+                on_release: root.verificar(usuario_username.text, usuario_nombre.text, usuario_password.text)
+            Button:
+                text: 'Salir sin hacer cambios'
+                on_press: root.dismiss()
+
+
+<VistaFichas>:
+    name: 'fichas'
+    BoxLayout:
+        orientation: 'vertical'
+
+        # Título
+        BoxLayout:
+            size_hint_y: None
+            height: 40
+            LabelOscuro:
+                text: 'GESTIÓN DE FICHAS'
+                font_size: '18sp'
+                bold: True
+                halign: 'center'
+                valign: 'middle'
+                size_hint_x: 1
+
+        # Barra de búsqueda
+        BoxLayout:
+            size_hint_y: None
+            height: 40
+            spacing: 10
+            padding: [5, 5]
+
+
+            Label:
+                text: 'ID:'
+                size_hint_x: None
+                width: 40
+                color: (0, 0, 0, 1)
+
+            TextInput:
+                id: filtro_id
+                hint_text: 'Nº'
+                size_hint_x: 0.12
+                multiline: False
+                on_text: root.filtrar_combinado()
+
+            Label:
+                text: 'Cliente:'
+                size_hint_x: None
+                width: 60
+                color: (0, 0, 0, 1)
+
+            TextInput:
+                id: filtro_cliente
+                hint_text: 'Nombre'
+                size_hint_x: 0.18
+                multiline: False
+                on_text: root.filtrar_combinado()
+
+            Label:
+                text: 'Desde:'
+                size_hint_x: None
+                width: 50
+                color: (0, 0, 0, 1)
+
+            TextInput:
+                id: filtro_fecha_desde
+                hint_text: 'dd/mm/aaaa'
+                size_hint_x: 0.12
+                multiline: False
+                on_text: root.filtrar_combinado()
+
+            Label:
+                text: 'Hasta:'
+                size_hint_x: None
+                width: 50
+                color: (0, 0, 0, 1)
+
+            TextInput:
+                id: filtro_fecha_hasta
+                hint_text: 'dd/mm/aaaa'
+                size_hint_x: 0.12
+                multiline: False
+                on_text: root.filtrar_combinado()
+
+            Label:
+                text: 'Tipo:'
+                size_hint_x: None
+                width: 60
+                color: (0, 0, 0, 1)
+
+            Spinner:
+                id: filtro_tipo
+                text: 'Todas'
+                values: root.tipos_disponibles
+                size_hint_x: 0.18
+                on_text: root.filtrar_combinado()
+
+
+
+        BoxLayout:
+            # Tabla de fichas
+            BoxLayout:
+                padding: .5
+                orientation: 'vertical'
+
+                # Encabezados
+                BoxLayout:
+                    size_hint_y: None
+                    height: 30
+                    spacing: .5
+                    LabelOscuro:
+                        text: 'ID'
+                        size_hint_x: .15
+                    LabelOscuro:
+                        text: 'Nombre'
+                        size_hint_x: .30
+                    LabelOscuro:
+                        text: 'Tipo'
+                        size_hint_x: .15
+                    LabelOscuro:
+                        text: 'Fecha'
+                        size_hint_x: .20
+                    LabelOscuro:
+                        text: 'Estado'
+                        size_hint_x: .20
+
+                # Contenedor para la lista CON FONDO
+                BoxLayout:
+                    size_hint_y: .89
+                    canvas.before:
+                        Color:
+                            rgba: 1, 1, 1, 0.5  # Blanco con 12% de opacidad (marca de agua)
+                        Rectangle:
+                            source: 'Logo_inrema_blanco2.png'
+                            size: self.width * 0.4, self.height * 0.4
+                            pos: self.center_x - self.width * 0.2, self.center_y - self.height * 0.2
+
+                    # Lista de fichas
+                    AdminRV:
+                        id: rv_fichas
+                        viewclass: 'SelectableFichaLabel'
+
+
+            # Botones laterales
+            BoxLayout:
+                spacing: .5
+                size_hint_x: .2
+                orientation: 'vertical'
+                padding: .5
+
+                BotonOscuro:
+                    text: 'Agregar Ficha'
+                    id: boton_agregar
+                    on_release: root.agregar_ficha()
+
+                BotonOscuro:
+                    text: 'Detalles Ficha'
+                    on_release: root.modificar_ficha()
+
+                BotonOscuro:
+                    text: 'Eliminar Ficha'
+                    id: boton_eliminar
+                    background_color: (0.9, 0.3, 0.3, 1)
+                    on_release: root.eliminar_ficha()
+
+                BotonOscuro:
+                    text: 'Actualizar'
+                    on_release: root.imprimir_ficha()
+
+<SelectableFichaLabel>:
+    canvas.before:
+        Color:
+            rgba: hex('#C9F3EF') if self.selected else hex('#f0f0f093')
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    BoxLayout:
+        size_hint_y: None
+        height: 40  # ← Altura fija, como en SelectableUsersLabel
+        spacing: 10
+        padding: 5
+
+        Label:
+            id: _id
+            size_hint_x: .15
+            color: (0, 0, 0, 1)
+            halign: 'center'
+            valign: 'middle'
+            text_size: self.size
+
+        Label:
+            id: _nombre
+            size_hint_x: .30
+            color: (0, 0, 0, 1)
+            halign: 'left'
+            valign: 'middle'
+            text_size: self.size
+
+        Label:
+            id: _tipo
+            size_hint_x: .15
+            color: (0, 0, 0, 1)
+            halign: 'center'
+            valign: 'middle'
+            text_size: self.size
+
+        Label:
+            id: _fecha
+            size_hint_x: .20
+            color: (0, 0, 0, 1)
+            halign: 'center'
+            valign: 'middle'
+            text_size: self.size
+
+        Label:
+            id: _estado
+            size_hint_x: .20
+            color: (0, 0, 0, 1)
+            halign: 'center'
+            valign: 'middle'
+            text_size: self.size
+
+<EditarFichaPopup>:
+    size_hint: .9, .9
+    auto_dismiss: False
+    title: 'Editar Ficha'
+
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 20
+        spacing: 10
+
+        ScrollView:
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint_y: None
+                height: self.minimum_height
+                spacing: 15
+
+                # --- DATOS DEL CLIENTE ---
+                LabelOscuro:
+                    text: 'DATOS DEL CLIENTE'
+                    size_hint_y: None
+                    height: 30
+                    bold: True
+
+                BoxLayout:
+                    orientation: 'horizontal'
+                    size_hint_y: None
+                    height: 30
+                    spacing: 10
+                    Label:
+                        text: 'RIF:'
+                        size_hint_x: 0.1
+                        color: 1,1,1,1
+                    Spinner:
+                        id: tipo_rif
+                        text: 'V-'
+                        values: ['V-', 'E-', 'P-', 'J-', 'G-', 'R-']
+                        size_hint_x: 0.05
+                    TextInput:
+                        id: nuevo_rif
+                        size_hint_x: 0.2
+                    Label:
+                        text: 'Nombre:'
+                        size_hint_x: 0.1
+                        color: 1,1,1,1
+                    TextInput:
+                        id: nuevo_cliente
+                        size_hint_x: 0.4
+                    Label:
+                        text: 'Fecha:'
+                        size_hint_x: 0.1
+                        color: 1,1,1,1
+                    TextInput:
+                        id: nueva_fecha
+                        readonly: True
+                        size_hint_x: 0.1
+
+                BoxLayout:
+                    orientation: 'horizontal'
+                    size_hint_y: None
+                    height: 30
+                    spacing: 10
+                    Label:
+                        text: 'Teléfono:'
+                        size_hint_x: 0.1
+                        color: 1,1,1,1
+                    TextInput:
+                        id: nuevo_telefono
+                        size_hint_x: 0.2
+                    Label:
+                        text: 'Dirección:'
+                        size_hint_x: 0.1
+                        color: 1,1,1,1
+                    TextInput:
+                        id: nueva_direccion
+                        size_hint_x: 0.6
+
+                # --- DATOS DEL MOTOR ---
+                LabelOscuro:
+                    text: 'DATOS DEL MOTOR'
+                    size_hint_y: None
+                    height: 30
+                    bold: True
+
+                BoxLayout:
+                    orientation: 'horizontal'
+                    size_hint_y: None
+                    height: 30
+                    spacing: 10
+                    Label:
+                        text: 'Tipo Motor:'
+                        size_hint_x: 0.1
+                        color: 1,1,1,1
+                    Spinner:
+                        id: tipo_motor
+                        text: 'Seleccionar'
+                        values: ['Gasolina', 'Diésel', 'Híbrido']
+                        size_hint_x: 0.3
+                    Label:
+                        text: 'Serial Motor:'
+                        size_hint_x: 0.1
+                        color: 1,1,1,1
+                    TextInput:
+                        id: serial_motor
+                        size_hint_x: 0.5
+
+                # --- PARTES RECIBIDAS ---
+                LabelOscuro:
+                    text: 'PARTES RECIBIDAS'
+                    size_hint_y: None
+                    height: 30
+                    bold: True
+
+                GridLayout:
+                    cols: 12
+                    size_hint_y: None
+                    height: self.minimum_height
+                    row_default_height: 30
+                    padding: 10
+                    spacing: 10
+
+                    # Encabezados
+                    Label:
+                        text: 'CANT'
+                        color: 1,1,1,1
+                    Label:
+                        text: 'Partes Recibidas'
+                        color: 1,1,1,1
+                    Label:
+                        text: 'CANT'
+                        color: 1,1,1,1
+                    Label:
+                        text: 'Partes Recibidas'
+                        color: 1,1,1,1
+                    Label:
+                        text: 'CANT'
+                        color: 1,1,1,1
+                    Label:
+                        text: 'Partes Recibidas'
+                        color: 1,1,1,1
+                    Label:
+                        text: 'CANT'
+                        color: 1,1,1,1
+                    Label:
+                        text: 'Partes Recibidas'
+                        color: 1,1,1,1
+                    Label:
+                        text: 'CANT'
+                        color: 1,1,1,1
+                    Label:
+                        text: 'Partes Recibidas'
+                        color: 1,1,1,1
+                    Label:
+                        text: 'CANT'
+                        color: 1,1,1,1
+                    Label:
+                        text: 'Partes Recibidas'
+                        color: 1,1,1,1
+
+                    # Fila 1
+
+                    TextInput:
+                        id: cantidad_grid_1
+                        input_filter: 'float'
+                    Label:
+                        id: ciguenal
+                        text: 'Cigueñal'
+                        color: 1,1,1,1
+                    TextInput:
+                        id: cantidad_grid_2
+                        input_filter: 'float'
+                    Label:
+                        id: bujias
+                        text: 'Bujias'
+                        color: 1,1,1,1
+                    TextInput:
+                        id: cantidad_grid_3
+                        input_filter: 'float'
+                    Label:
+                        id: polea
+                        text: 'Polea'
+                        color: 1,1,1,1
+                    TextInput:
+                        id: cantidad_grid_4
+                        input_filter: 'float'
+                    Label:
+                        id: multiple
+                        text: 'Multiple'
+                        color: 1,1,1,1
+                    TextInput:
+                        id: cantidad_grid_5
+                        input_filter: 'float'
+                    Label:
+                        id: bloque
+                        text: 'Bloque'
+                        color: 1,1,1,1
+                    TextInput:
+                        id: cantidad_grid_6
+                        input_filter: 'float'
+                    Label:
+                        id: bodis
+                        text: 'Bodis'
+                        color: 1,1,1,1
+
+                    # Fila 2
+                    TextInput:
+                        id: cantidad_grid_7
+                        input_filter: 'float'
+                    Label:
+                        id: volante
+                        text: 'Volante'
+                        color: 1,1,1,1
+                    TextInput:
+                        id: cantidad_grid_8
+                        input_filter: 'float'
+                    Label:
+                        id: carter
+                        text: 'Carter'
+                        color: 1,1,1,1
+                    TextInput:
+                        id: cantidad_grid_9
+                        input_filter: 'float'
+                    Label:
+                        id: tapas_de_bancada
+                        text: 'Tapas de Bancada'
+                        color: 1,1,1,1
+                    TextInput:
+                        id: cantidad_grid_10
+                        input_filter: 'float'
+                    Label:
+                        id: puntas
+                        text: 'Puntas'
+                        color: 1,1,1,1
+                    TextInput:
+                        id: cantidad_grid_11
+                        input_filter: 'float'
+                    Label:
+                        id: engranajes
+                        text: 'Engranajes'
+                        color: 1,1,1,1
+                    TextInput:
+                        id: cantidad_grid_12
+                        input_filter: 'float'
+                    Label:
+                        id: camisas
+                        text: 'Camisas'
+                        color: 1,1,1,1
+
+                    # Fila 3
+                    TextInput:
+                        id: cantidad_grid_13
+                        input_filter: 'float'
+                    Label:
+                        id: arbol_de_leva
+                        text: 'Árbol de Leva'
+                        color: 1,1,1,1
+                    TextInput:
+                        id: cantidad_grid_14
+                        input_filter: 'float'
+                    Label:
+                        id: esparragos
+                        text: 'Esparragos'
+                        color: 1,1,1,1
+                    TextInput:
+                        id: cantidad_grid_15
+                        input_filter: 'float'
+                    Label:
+                        id: balancines
+                        text: 'Balancines'
+                        color: 1,1,1,1
+                    TextInput:
+                        id: cantidad_grid_16
+                        input_filter: 'float'
+                    Label:
+                        id: camaras
+                        text: 'Cámaras'
+                        color: 1,1,1,1
+                    TextInput:
+                        id: cantidad_grid_17
+                        input_filter: 'float'
+                    Label:
+                        id: tapa_valvulas
+                        text: 'Tapa Válvulas'
+                        color: 1,1,1,1
+                    TextInput:
+                        id: cantidad_grid_18
+                        input_filter: 'float'
+                    Label:
+                        id: toma_de_agua
+                        text: 'Toma de agua'
+                        color: 1,1,1,1
+
+                    # Fila 4
+                    TextInput:
+                        id: cantidad_grid_19
+                        input_filter: 'float'
+                    Label:
+                        id: valvulas_adm
+                        text: 'Válvulas Adm.'
+                        color: 1,1,1,1
+                    TextInput:
+                        id: cantidad_grid_20
+                        input_filter: 'float'
+                    Label:
+                        id: bielas
+                        text: 'Bielas'
+                        color: 1,1,1,1
+                    TextInput:
+                        id: cantidad_grid_21
+                        input_filter: 'float'
+                    Label:
+                        id: chambers
+                        text: 'Chambers'
+                        color: 1,1,1,1
+                    TextInput:
+                        id: cantidad_grid_22
+                        input_filter: 'float'
+                    Label:
+                        id: valvulas_esc
+                        text: 'Válvulas Esc.'
+                        color: 1,1,1,1
+                    TextInput:
+                        id: cantidad_grid_23
+                        input_filter: 'float'
+                    Label:
+                        id: tapas_de_bielas
+                        text: 'Tapas de Bielas'
+                        color: 1,1,1,1
+                    TextInput:
+                        id: cantidad_grid_24
+                        input_filter: 'float'
+                    Label:
+                        id: bomba_de_aceite
+                        text: 'Bomba de Aceite'
+                        color: 1,1,1,1
+
+
+                    # Fila 5
+                    TextInput:
+                        id: cantidad_grid_25
+                        input_filter: 'float'
+                    Label:
+                        id: resortes
+                        text: 'Resortes'
+                        color: 1,1,1,1
+                    TextInput:
+                        id: cantidad_grid_26
+                        input_filter: 'float'
+                    Label:
+                        id: camarin
+                        text: 'Camarin'
+                        color: 1,1,1,1
+                    TextInput:
+                        id: cantidad_grid_27
+                        input_filter: 'float'
+                    Label:
+                        id: toma_de_agua2
+                        text: 'Toma de Agua'
+                        color: 1,1,1,1
+                    TextInput:
+                        id: cantidad_grid_28
+                        input_filter: 'float'
+                    Label:
+                        id: cuñadas
+                        text: 'Cuñadas'
+                        color: 1,1,1,1
+                    TextInput:
+                        id: cantidad_grid_29
+                        input_filter: 'float'
+                    Label:
+                        id: pasador
+                        text: 'Pasador'
+                        color: 1,1,1,1
+                    TextInput:
+                        id: cantidad_grid_30
+                        input_filter: 'float'
+                    Label:
+                        id: base_de_agua
+                        text: 'Base de Agua'
+                        color: 1,1,1,1
+
+                #
+                # --- SECCIÓN DE REPUESTOS ---
+                LabelOscuro:
+                    text: 'REPUESTOS'
+                    size_hint_y: None
+                    height: 30
+                    bold: True
+
+                # Botón para agregar repuesto
+                BoxLayout:
+                    size_hint_y: None
+                    height: 40
+                    spacing: 10
+                    Button:
+                        text: 'Agregar Repuesto'
+                        on_release: root.agregar_repuesto()
+
+                # GridLayout para repuestos (5 columnas)
+                GridLayout:
+                    id: grid_repuestos
+                    cols: 5
+                    size_hint_y: None
+                    height: self.minimum_height
+                    row_default_height: 30
+                    padding: 10
+                    spacing: 10
+
+                    # Encabezados
+                    Label:
+                        text: 'Código'
+                        color: 1,1,1,1
+                        size_hint_x: 0.2
+                    Label:
+                        text: 'Nombre'
+                        color: 1,1,1,1
+                        size_hint_x: 0.3
+                    Label:
+                        text: 'Cant.'
+                        color: 1,1,1,1
+                        size_hint_x: 0.15
+                    Label:
+                        text: 'Precio'
+                        color: 1,1,1,1
+                        size_hint_x: 0.15
+                    Label:
+                        text: 'Total'
+                        color: 1,1,1,1
+                        size_hint_x: 0.2
+
+                #
+                LabelOscuro:
+                    text: 'MANO DE OBRA'
+                    size_hint_y: None
+                    height: 30
+                    bold: True
+
+                # Botón para agregar mano de obra
+                BoxLayout:
+                    size_hint_y: None
+                    height: 40
+                    spacing: 10
+                    Button:
+                        text: 'Agregar Mano de Obra'
+                        on_release: root.agregar_mano_de_obra()
+
+                # GridLayout para mano de obra (5 columnas)
+                GridLayout:
+                    id: grid_mano_obra
+                    cols: 5
+                    size_hint_y: None
+                    height: self.minimum_height
+                    row_default_height: 30
+                    padding: 10
+                    spacing: 10
+
+                    # Encabezados
+                    Label:
+                        text: 'Operador'
+                        color: 1,1,1,1
+                        size_hint_x: 0.3
+                    Label:
+                        text: 'Trabajo'
+                        color: 1,1,1,1
+                        size_hint_x: 0.2
+                    Label:
+                        text: 'Horas'
+                        color: 1,1,1,1
+                        size_hint_x: 0.15
+                    Label:
+                        text: 'Precio/Hora'
+                        color: 1,1,1,1
+                        size_hint_x: 0.15
+                    Label:
+                        text: 'Total'
+                        color: 1,1,1,1
+                        size_hint_x: 0.2
+
+
+        # === RESUMEN DE LA FICHA (DASHBOARD) ===
+        LabelOscuro:
+            text: 'TRABAJOS'
+            size_hint_y: None
+            height: 40
+            bold: True
+            font_size: 20
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_y: None
+            height: 160
+            spacing: 10
+            padding: 10
+
+            # Espacio vacío para contenido dinámico (opcional)
+
+  
+            BoxLayout:
+                # Tabla de trabajos
+                BoxLayout:
+                    padding: 10
+                    orientation: 'vertical'
+
+                    # Encabezados
+                    BoxLayout:
+                        size_hint_y: None
+                        height: 40
+                        spacing: 2
+                        LabelOscuro:
+                            text: 'ID'
+                            size_hint_x: .15
+                            bold: True
+                        LabelOscuro:
+                            text: 'Trabajo'
+                            size_hint_x: .30
+                            bold: True
+                        LabelOscuro:
+                            text: 'Operador'
+                            size_hint_x: .20
+                            bold: True
+                        LabelOscuro:
+                            text: 'Fecha'
+                            size_hint_x: .15
+                            bold: True
+                        LabelOscuro:
+                            text: 'Estado'
+                            size_hint_x: .10
+                            bold: True
+                        LabelOscuro:
+                            text: 'Total'
+                            size_hint_x: .10
+                            bold: True
+
+                    # Lista de trabajos
+                    RecycleView:
+                        id: rv_trabajos
+                        size_hint_y: 1  # Ocupa todo el espacio disponible
+                        bar_width: 8
+                        bar_color: 0.5, 0.5, 1, 1
+                        viewclass: 'SelectableTrabajoRow'
+
+                        SelectableRecycleBoxLayout:
+                            id: layout_trabajos
+                            default_size: None, 50
+                            default_size_hint: 1, None
+                            size_hint_y: None
+                            height: self.minimum_height
+                            orientation: 'vertical'
+                            spacing: 1
+                            padding: 1
+
+
+            # Botones de acción
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint_x: 0.2
+                spacing: 5
+
+                Button:
+                    text: 'Añadir Trabajo'
+                    on_release: root.abrir_popup_añadir_trabajo()
+
+                Button:
+                    text: 'Imprimir Trabajo'
+                    on_release: root.imprimir_trabajo()
+
+                Button:
+                    text: 'Detalles Trabajo'
+                    on_release: root.mostrar_detalle_trabajo()
+                Button:
+                    text: 'Eliminar Trabajo'
+                    on_release: root.guardar_cambios()
+
+        # === BOTONES FINALES ===
+        BoxLayout:
+            size_hint_y: None
+            height: 50
+            spacing: 20
+            BotonOscuro:
+                text: 'Guardar Cambios'
+                on_release: root.guardar_cambios()
+            BotonOscuro:
+                text: 'Cancelar'
+                on_release: root.dismiss()
+
+<AñadirTrabajoPopup>:
+    title: 'Añadir Nuevo Trabajo'
+    size_hint: .7, .9
+    auto_dismiss: False
+
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 20
+        spacing: 10
+
+        # --- SELECCIÓN DE TRABAJO ---
+        Label:
+            text: 'Seleccione un trabajo'
+            color: 1, 1, 1, 1
+            size_hint_y: None
+            height: 30
+
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint_y: None
+            height: 50
+            TextInput:
+                id: buscador_trabajo
+                hint_text: 'Buscar trabajo...'
+                multiline: False
+ 
+
+        # --- SELECCIÓN DE OPERADOR ---
+        Label:
+            text: 'Operador'
+            color: 1, 1, 1, 1
+            size_hint_y: None
+            height: 30
+
+        BoxLayout:
+            size_hint_y: None
+            height: 40
+            padding: 0
+            Spinner:
+                id: spinner_operador
+                text: 'Seleccionar operador'
+                values: []
+                size_hint: (1, 1)
+                on_text: root.cargar_datos_operador(self.text)
+
+        # --- DATOS DEL OPERADOR Y TRABAJO ---
+        GridLayout:
+            cols: 2
+            spacing: 20
+            size_hint_y: None
+            height: 180
+
+            BoxLayout:
+                orientation: 'vertical'
+                Label:
+                    text: 'Tasa (% operador)'
+                    color: 1, 1, 1, 1
+                    size_hint_y: None
+                    height: 30
+                TextInput:
+                    id: tasa_operador
+                    readonly: True
+                    text: '0.00'
+
+            BoxLayout:
+                orientation: 'vertical'
+                Label:
+                    text: 'Cantidad'
+                    color: 1, 1, 1, 1
+                    size_hint_y: None
+                    height: 30
+                TextInput:
+                    id: cantidad_horas
+                    input_filter: 'float'
+                    text: '1'
+                    on_text: root.calcular_subtotal()
+
+            BoxLayout:
+                orientation: 'vertical'
+                Label:
+                    text: 'Precio Trabajo'
+                    color: 1, 1, 1, 1
+                    size_hint_y: None
+                    height: 30
+                TextInput:
+                    id: precio_por_hora
+                    input_filter: 'float'
+                    on_text: root.calcular_subtotal()
+
+            BoxLayout:
+                orientation: 'vertical'
+                Label:
+                    text: 'Subtotal'
+                    color: 1, 1, 1, 1
+                    size_hint_y: None
+                    height: 30
+                TextInput:
+                    id: subtotal
+                    readonly: True
+                    text: '0.00'
+
+        # --- OBSERVACIÓN (cerca de los datos) ---
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint_y: None
+            height: 80
+            Label:
+                text: 'Observación'
+                color: 1, 1, 1, 1
+                size_hint_y: None
+                height: 30
+            TextInput:
+                id: observacion
+                size_hint_y: 1  # Ocupa el espacio restante en el BoxLayout
+                multiline: True
+                background_color: 1, 1, 1, 1
+                foreground_color: 0, 0, 0, 1
+
+
+        # --- REPUESTOS AÑADIDOS ---
+        LabelOscuro:
+            text: 'REPUESTOS DEL TRABAJO'
+            size_hint_y: None
+            height: 30
+            bold: True
+
+        ScrollView:
+            size_hint_y: 0.2
+            GridLayout:
+                id: grid_repuestos_trabajo
+                cols: 5
+                size_hint_y: None
+                height: self.minimum_height
+                row_default_height: 30
+                spacing: 10
+                padding: 5
+
+                # Encabezados
+                Label: 
+                    text: 'Código' 
+                    color: 1,1,1,1 
+                    size_hint_x: 0.2
+                Label: 
+                    text: 'Nombre' 
+                    color: 1,1,1,1 
+                    size_hint_x: 0.3
+                Label: 
+                    text: 'Cant.' 
+                    color: 1,1,1,1
+                    size_hint_x: 0.15
+                Label: 
+                    text: 'Precio' 
+                    color: 1,1,1,1 
+                    size_hint_x: 0.15
+                Label: 
+                    text: 'Total' 
+                    color: 1,1,1,1 
+                    size_hint_x: 0.2
+
+        # --- BOTÓN ADICIONAL ---
+        BoxLayout:
+            size_hint_y: None
+            height: 50
+            Button:
+                text: 'Añadir Repuesto'
+                on_release: root.abrir_popup_repuestos()
+
+        # --- BOTONES FINALES ---
+        BoxLayout:
+            size_hint_y: None
+            height: 50
+            spacing: 10
+            Button:
+                text: 'Guardar'
+                on_release: root.guardar_trabajo()
+            Button:
+                text: 'Cancelar'
+                on_release: root.dismiss()
+                

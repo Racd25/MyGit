@@ -1,0 +1,74 @@
+
+#:import hex kivy.utils.get_color_from_hex
+
+<SigninWindow>:
+	orientation: 'vertical'
+	canvas.before:
+		Color:
+			rgba: hex('#159F9A')
+		Rectangle:
+			size: self.size
+			pos: self.pos
+	BoxLayout:
+		size_hint_y: .05
+	BoxLayout:
+		canvas.before:
+			Color:
+				rgba: hex('#F2F2F2')
+			Rectangle:
+				size: self.size
+				pos: self.pos
+				source: 'Logo.jpeg'
+		size_hint_y: .9
+		Label:
+			size_hint_x: .3
+		BoxLayout:
+			size_hint_x: .4
+			orientation: 'vertical'
+			Label: 
+				size_hint_y: .15
+				text: "Bienvenido a Mary's Pet"
+				color: (0,0,0,1)
+				font_size: '40sp' 
+			Label:
+				id: signin_notificacion
+				size_hint_y: .15
+				color: (1, .2, .2, 1)
+			TextInput:
+				id: username
+				size_hint_y: .1
+				hint_text: 'Nombre de Usuario'
+				multiline: False
+				write_tab: False
+				on_text_validate: root.verificar_usuario(self.text, password.text)
+			TextInput:
+				id: password
+				size_hint_y: .1
+				hint_text: 'Contraseña'
+				multiline: False
+				write_tab: False
+				password: True
+				on_text_validate: root.verificar_usuario(username.text, self.text)
+			Button:
+				size_hint_y: .1
+				background_normal: ''
+				background_color: hex('#393939')
+				text: 'Ingresar'
+				on_release: root.verificar_usuario(username.text, password.text)
+			Label:
+				size_hint_y: .4
+		Label:
+			size_hint_x: .3
+
+    BoxLayout:
+        size_hint_y: .05
+        padding: [100, 10, 10, 10]  # Espaciado opcional
+		Widget:
+        Label:
+			text: 'Hecho Por: Ing. Raúl Calmón'
+			color: (0, 0, 0, 1)
+			size_hint_x: .5
+			halign: 'right'
+			valign: 'middle'
+			text_size: (self.width, None)  # No limitar altura, evita salto de línea
+			shorten: False  # No recortar texto
